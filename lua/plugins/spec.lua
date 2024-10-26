@@ -464,52 +464,69 @@ return {
       end, 0)
     end,
   },
-  -- {
-  --   -- indent を見やすくする
-  --   'shellRaining/hlchunk.nvim',
-  --   event = { 'BufReadPre', 'BufNewFile' },
-  --   opts = {
-  --     chunk = {
-  --       enable = true,
-  --     },
-  --     indent = {
-  --       enable = true,
-  --     },
-  --   },
-  -- },
   {
     -- indent を見やすくする
-    'lukas-reineke/indent-blankline.nvim',
-    main = 'ibl',
-    ---@module "ibl"
-    ---@type ibl.config
-    config = function()
-      local highlight = {
-        'RainbowRed',
-        'RainbowYellow',
-        'RainbowBlue',
-        'RainbowOrange',
-        'RainbowGreen',
-        'RainbowViolet',
-        'RainbowCyan',
-      }
-
-      local hooks = require('ibl.hooks')
-      -- create the highlight groups in the highlight setup hook, so they are reset
-      -- every time the colorscheme changes
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-        vim.api.nvim_set_hl(0, 'RainbowRed', { fg = '#C06C75' })
-        vim.api.nvim_set_hl(0, 'RainbowYellow', { fg = '#C5C07B' })
-        vim.api.nvim_set_hl(0, 'RainbowBlue', { fg = '#61AAEF' })
-        vim.api.nvim_set_hl(0, 'RainbowOrange', { fg = '#C19A66' })
-        vim.api.nvim_set_hl(0, 'RainbowGreen', { fg = '#68C379' })
-        vim.api.nvim_set_hl(0, 'RainbowViolet', { fg = '#A678D0' })
-        vim.api.nvim_set_hl(0, 'RainbowCyan', { fg = '#16B6C0' })
-      end)
-
-      require('ibl').setup({ indent = { highlight = highlight } })
-    end,
+    'shellRaining/hlchunk.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {
+      chunk = {
+        enable = true,
+      },
+      indent = {
+        enable = true,
+        chars = {
+          '│',
+        },
+        style = {
+          '#C06C75',
+          '#C5C07B',
+          '#61AAEF',
+          '#C19A66',
+          '#68C379',
+          '#A678D0',
+          '#16B6C0',
+        },
+      },
+    },
   },
+  -- {
+  --   -- indent を見やすくする
+  --   'lukas-reineke/indent-blankline.nvim',
+  --   main = 'ibl',
+  --   ---@module "ibl"
+  --   ---@type ibl.config
+  --   config = function()
+  --     local highlight = {
+  --       'RainbowRed',
+  --       'RainbowYellow',
+  --       'RainbowBlue',
+  --       'RainbowOrange',
+  --       'RainbowGreen',
+  --       'RainbowViolet',
+  --       'RainbowCyan',
+  --     }
+  --
+  --     local hooks = require('ibl.hooks')
+  --     -- create the highlight groups in the highlight setup hook, so they are reset
+  --     -- every time the colorscheme changes
+  --     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  --       vim.api.nvim_set_hl(0, 'RainbowRed', { fg = '#C06C75' })
+  --       vim.api.nvim_set_hl(0, 'RainbowYellow', { fg = '#C5C07B' })
+  --       vim.api.nvim_set_hl(0, 'RainbowBlue', { fg = '#61AAEF' })
+  --       vim.api.nvim_set_hl(0, 'RainbowOrange', { fg = '#C19A66' })
+  --       vim.api.nvim_set_hl(0, 'RainbowGreen', { fg = '#68C379' })
+  --       vim.api.nvim_set_hl(0, 'RainbowViolet', { fg = '#A678D0' })
+  --       vim.api.nvim_set_hl(0, 'RainbowCyan', { fg = '#16B6C0' })
+  --     end)
+  --
+  --     require('ibl').setup({
+  --       indent = {
+  --         highlight = highlight,
+  --         char = '▏',
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     -- cursor 下と同じ文字列に下線を引く'
     'xiyaowong/nvim-cursorword',
