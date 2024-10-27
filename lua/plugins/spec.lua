@@ -990,7 +990,7 @@ return {
         { '<leader>l', group = 'LSP' },
         { '<leader>r', group = 'Bookmark' },
         {
-          '<leader>W',
+          '<leader>u',
           function()
             local uri = vim.fn.expand('<cWORD>')
             local pattern = '[%w-]+:.*'
