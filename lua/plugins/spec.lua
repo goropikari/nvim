@@ -2,6 +2,7 @@ return {
   {
     -- colorscheme
     'ellisonleao/gruvbox.nvim',
+    event = 'VeryLazy',
     opts = {
       italic = {
         strings = false,
@@ -20,9 +21,40 @@ return {
     },
     config = function(plugin, opts)
       require('gruvbox').setup(opts)
-      vim.cmd('colorscheme gruvbox')
+      -- vim.cmd('colorscheme gruvbox')
     end,
   },
+  {
+    'ribru17/bamboo.nvim',
+    event = 'VeryLazy',
+    priority = 1000,
+    config = function()
+      require('bamboo').setup({
+        highlights = {
+          LineNr = { fg = '#C0D4C0' }, -- line number の色を変える
+          -- ['@comment'] = { fg = '#50B010' }, -- comment の色を変える
+        },
+      })
+      require('bamboo').load()
+    end,
+  },
+  {
+    'scottmckendry/cyberdream.nvim',
+    event = 'VeryLazy',
+  },
+  {
+    'navarasu/onedark.nvim',
+    event = 'VeryLazy',
+  },
+  {
+    'sainnhe/everforest',
+    event = 'VeryLazy',
+  },
+  {
+    'sainnhe/sonokai',
+    event = 'VeryLazy',
+  },
+
   {
     -- hex を色を付けて表示する
     -- :ColorizerToggle で有効になる
