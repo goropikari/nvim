@@ -18,6 +18,10 @@ return {
         Comment = { fg = '#50B010' }, -- comment の色を変える
       },
     },
+    config = function(plugin, opts)
+      require('gruvbox').setup(opts)
+      vim.cmd('colorscheme gruvbox')
+    end,
   },
   {
     -- hex を色を付けて表示する
