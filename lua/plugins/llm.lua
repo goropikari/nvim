@@ -134,4 +134,8 @@ return {
       },
     },
   },
+  os.getenv('COMPANY_LLM_PLUGIN_PATH') and {
+    os.getenv('COMPANY_LLM_PLUGIN_PATH'),
+    opts = {},
+  },
 }
