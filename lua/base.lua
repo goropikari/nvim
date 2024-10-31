@@ -80,36 +80,35 @@ vim.filetype.add({
 
 vim.opt.clipboard = 'unnamedplus' -- Sync with system clipboard
 
--- 公式 doc に記載されている方法だと paste 時に ctrl-c を押さないと paste ができなくなるのでその回避
--- https://github.com/neovim/neovim/discussions/28010#discussioncomment-9877494
 -- https://neovim.io/doc/user/provider.html#clipboard-osc52
-local function paste()
-  return {
-    vim.fn.split(vim.fn.getreg(''), '\n'),
-    vim.fn.getregtype(''),
+if vim.fn.has('wsl') == 1 or os.getenv('HOSTNAME') ~= nil then
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    },
+    paste = {
+      -- https://github.com/neovim/neovim/discussions/28010#discussioncomment-9877494
+      ['+'] = function()
+        return {
+          vim.fn.split(vim.fn.getreg(''), '\n'),
+          vim.fn.getregtype(''),
+        }
+      end,
+    },
   }
 end
 
-vim.g.clipboard = {
-  name = 'OSC 52',
-  copy = {
-    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-  },
-  paste = {
-    ['+'] = paste,
-    ['*'] = paste,
-  },
-}
+-- 'x' の削除をブラックホールレジスタに送る
+vim.keymap.set('n', 'x', '"_x', { silent = true })
+vim.keymap.set('n', 'X', '"_X', { silent = true })
 
 -- terminal mode を escape で抜ける
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
 
 -- default のコメントキーマップを無効化
-vim.keymap.set('n', 'gc', '<NOP>')
-vim.keymap.set('n', 'gcc', '<NOP>')
-vim.keymap.set('v', 'gc', '<NOP>')
-vim.keymap.set('v', 'gcc', '<NOP>')
+vim.keymap.set({ 'n', 'v' }, 'gc', '<NOP>')
+vim.keymap.set({ 'n', 'v' }, 'gcc', '<NOP>')
 
 -- 削除して挿入のキーバインドを無効化
 vim.keymap.set('n', 's', '<NOP>')

@@ -974,13 +974,33 @@ return {
         },
         { '<leader>q', vim.diagnostic.setloclist, desc = 'Open diagnostics list' },
 
-        -- [[ osc52 ]]
-        -- ssh, docker 内で copy したものをホストの clipboard に入れる
+        -- clipboard へコピー
         {
           '<leader>y',
           expr = true,
           group = 'Yank',
           replace_keycodes = false,
+        },
+        {
+          '<leader>ya',
+          function()
+            vim.fn.setreg('+', vim.fn.expand('%:p'))
+          end,
+          desc = 'clipboard: copy file absolute path',
+        },
+        {
+          '<leader>yf',
+          function()
+            vim.fn.setreg('+', vim.fn.expand('%:t'))
+          end,
+          desc = 'clipboard: copy current file name',
+        },
+        {
+          '<leader>yr',
+          function()
+            vim.fn.setreg('+', vim.fn.expand('%'))
+          end,
+          desc = 'clipboard: copy file relative path',
         },
 
         -- [[ Noice ]]
@@ -1018,34 +1038,6 @@ return {
         --   end,
         --   desc = 'write & source',
         -- },
-      },
-    },
-  },
-  {
-    -- ssh, docker 内で copy したものをホストの clipboard に入れる
-    'ojroques/nvim-osc52',
-    event = 'VeryLazy',
-    keys = {
-      {
-        '<leader>ya',
-        function()
-          require('osc52').copy(vim.fn.expand('%:p'))
-        end,
-        desc = 'osc52: copy file absolute path',
-      },
-      {
-        '<leader>yf',
-        function()
-          require('osc52').copy(vim.fn.expand('%:t'))
-        end,
-        desc = 'osc52: copy current file name',
-      },
-      {
-        '<leader>yr',
-        function()
-          require('osc52').copy(vim.fn.expand('%'))
-        end,
-        desc = 'osc52: copy file relative path',
       },
     },
   },
