@@ -1115,18 +1115,25 @@ return {
     enabled = vim.fn.executable('devcontainer') == 1,
     cmd = { 'DevContainerUp' },
     dependencies = {
-      'ojroques/nvim-osc52',
       -- dir = '~/workspace/github/termitary-mod.nvim',
       'goropikari/termitary-mod.nvim',
     },
     opts = {
-      -- cmd = 'alacritty -e',
+      cmd = (function()
+        if vim.fn.has('wsl') == 1 then
+          return 'cmd.exe /c "wt.exe" -w 0 nt bash -c'
+        else
+          return 'alacritty -e'
+        end
+      end)(),
       -- cmd = 'zellij run -- ',
+      -- cmd = '',
       devcontainer = {
         path = 'devcontainer',
         args = {
           '--workspace-folder=.',
           -- '--skip-non-blocking-commands',
+          -- '--remove-existing-container',
           '--skip-post-attach=true',
           '--skip-post-create=true',
           '--mount "type=bind,source=$(pwd),target=/workspaces/$(basename $(pwd))"',
