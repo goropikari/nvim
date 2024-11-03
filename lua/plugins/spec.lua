@@ -323,7 +323,7 @@ return {
   },
   {
     'goropikari/bookmarks.nvim',
-    -- dir = '~/workspace/github/bookmarks.nvim',
+    dev = true,
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
@@ -827,7 +827,7 @@ return {
   {
     -- 開いている window を番号で選択する
     'goropikari/chowcho.nvim',
-    -- dir = '~/workspace/github/chowcho.nvim',
+    dev = true,
     branch = 'fix',
     dependencies = {
       'nvim-tree/nvim-web-devicons',
@@ -1074,7 +1074,7 @@ return {
   },
   {
     'goropikari/jnv.nvim',
-    -- dir = '~/workspace/github/jnv.nvim',
+    dev = true,
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
@@ -1111,12 +1111,14 @@ return {
   },
   {
     'goropikari/local-devcontainer.nvim',
-    -- dir = '~/workspace/github/local-devcontainer.nvim',
+    dev = true,
     enabled = vim.fn.executable('devcontainer') == 1,
     cmd = { 'DevContainerUp' },
     dependencies = {
-      -- dir = '~/workspace/github/termitary-mod.nvim',
-      'goropikari/termitary-mod.nvim',
+      {
+        'goropikari/termitary-mod.nvim',
+        dev = true,
+      },
     },
     opts = {
       cmd = (function()

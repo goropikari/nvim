@@ -70,7 +70,7 @@ return {
   },
   {
     'goropikari/nvim-dap-golang',
-    -- dir = '~/workspace/github/nvim-dap-golang',
+    dev = true,
     dependencies = {
       'mfussenegger/nvim-dap',
     },
@@ -99,7 +99,7 @@ return {
   },
   {
     'goropikari/nvim-dap-rdbg',
-    -- dir = '~/workspace/github/nvim-dap-rdbg',
+    dev = true,
     dependencies = {
       'mfussenegger/nvim-dap',
     },
@@ -121,7 +121,7 @@ return {
   },
   {
     'goropikari/nvim-dap-cpp',
-    -- dir = '/home/arch/workspace/github/nvim-dap-cpp',
+    dev = true,
     dependencies = {
       'mfussenegger/nvim-dap',
       'nvim-lua/plenary.nvim',
