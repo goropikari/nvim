@@ -13,8 +13,9 @@ return {
     end,
   },
   {
-    'neoclide/jsonc.vim',
+    'goropikari/jsonc.vim',
     ft = { 'json', 'jsonc' },
+    dev = true,
   },
   {
     -- markdown
