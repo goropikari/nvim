@@ -61,6 +61,8 @@ require('lazy').setup({
         'netrw',
         'netrwPlugin',
         'netrwSettings',
+        'man', -- man page
+        'rplugin', -- remote plugin
       },
     },
   },

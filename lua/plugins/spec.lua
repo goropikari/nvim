@@ -236,13 +236,14 @@ return {
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
-    dependencies = {
-      dir = vim.fn.stdpath('config') .. '/lua/custom/plugins/codecompanion-lualine',
-    },
+    event = 'VimEnter',
+    -- dependencies = {
+    --   dir = vim.fn.stdpath('config') .. '/lua/custom/plugins/codecompanion-lualine',
+    -- },
     opts = {
       options = {
-        icons_enabled = false,
-        theme = 'auto',
+        icons_enabled = true,
+        theme = 'wombat',
         component_separators = '|',
         section_separators = '',
       },
@@ -319,6 +320,7 @@ return {
   {
     -- vim.ui.input を cursor で選択できるようにする
     'stevearc/dressing.nvim',
+    event = 'VimEnter',
     opts = {},
   },
   {
@@ -389,6 +391,7 @@ return {
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    event = 'VeryLazy',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
@@ -534,7 +537,12 @@ return {
   -- },
   {
     -- cursor 下と同じ文字列に下線を引く'
-    'xiyaowong/nvim-cursorword',
+    'yamatsum/nvim-cursorline',
+    opts = {
+      cursorline = {
+        enable = false,
+      },
+    },
   },
   {
     -- splitting/joining blocks of code like arrays, hashes, statements, objects, dictionaries, etc.
@@ -930,6 +938,7 @@ return {
   {
     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
+    event = 'VimEnter',
     opts = {
       expand = 1,
       spec = {
