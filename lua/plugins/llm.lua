@@ -141,7 +141,7 @@ return {
     cmd = { 'OllamaChat' },
   },
   os.getenv('COMPANY_LLM_PLUGIN_PATH') and {
-    os.getenv('COMPANY_LLM_PLUGIN_PATH'),
+    dir = os.getenv('COMPANY_LLM_PLUGIN_PATH'),
     opts = {},
   },
 }
