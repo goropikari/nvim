@@ -3,11 +3,11 @@ local utils = require('utils')
 return {
   {
     'github/copilot.vim',
-    enabled = vim.fn.filereadable(os.getenv('HOME') .. '/.config/github-copilot/apps.json') == 1,
+    enabled = os.getenv('NVIM_COPILOT_ENABLE') == '1',
   },
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    enabled = vim.fn.filereadable(os.getenv('HOME') .. '/.config/github-copilot/apps.json') == 1,
+    enabled = os.getenv('NVIM_COPILOT_ENABLE') == '1',
     branch = 'canary',
     dependencies = {
       { 'github/copilot.vim' },
