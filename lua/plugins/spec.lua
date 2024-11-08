@@ -1123,34 +1123,21 @@ return {
     dev = true,
     enabled = vim.fn.executable('devcontainer') == 1,
     cmd = { 'DevContainerUp' },
-    dependencies = {
-      {
-        'goropikari/termitary-mod.nvim',
-        dev = true,
-      },
-    },
     opts = {
-      cmd = (function()
-        if vim.fn.has('wsl') == 1 then
-          return 'cmd.exe /c "wt.exe" -w 0 nt bash -c'
-        else
-          return 'alacritty -e'
-        end
-      end)(),
-      -- cmd = 'zellij run -- ',
-      -- cmd = '',
       devcontainer = {
-        path = 'devcontainer',
         args = {
           '--workspace-folder=.',
           -- '--skip-non-blocking-commands',
           -- '--remove-existing-container',
-          '--skip-post-attach=true',
-          '--skip-post-create=true',
-          '--mount "type=bind,source=$(pwd),target=/workspaces/$(basename $(pwd))"',
-          '--mount "type=bind,source=$HOME/.config/nvim,target=/home/vscode/.config/nvim"',
-          '--mount "type=bind,source=$HOME/.aws,target=/home/vscode/.aws"',
-          [[--additional-features='{"ghcr.io/goropikari/devcontainer-feature/neovim:1": {}, "ghcr.io/devcontainers/features/sshd:1": {}}']],
+          -- '--skip-post-attach=true',
+          -- '--skip-post-create=true',
+          '--mount',
+          'type=bind,source=' .. vim.fn.getcwd() .. ',target=/workspaces/' .. vim.fn.expand('%:p:h:t'),
+          '--mount',
+          'type=bind,source=' .. vim.fn.stdpath('config') .. ',target=/home/vscode/.config/nvim',
+          '--mount',
+          'type=bind,source=' .. os.getenv('HOME') .. '/.aws,target=/home/vscode/.aws',
+          [[--additional-features='{"ghcr.io/goropikari/devcontainer-feature/neovim:1": {}}']],
         },
       },
     },
