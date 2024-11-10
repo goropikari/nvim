@@ -5,9 +5,13 @@ vim.api.nvim_create_user_command('Make', function()
   vim.cmd('messages')
 end, {})
 
-vim.api.nvim_create_user_command('DevContainerUp', function()
-  require('local-devcontainer').up()
-end, {})
+vim.api.nvim_create_user_command('DevContainerUp', function(opts)
+  require('local-devcontainer').up({
+    remove_existing_container = opts.args == 'true',
+  })
+end, {
+  nargs = '?',
+})
 
 -- https://github.com/LazyVim/LazyVim/blob/v12.38.2/lua/lazyvim/config/autocmds.lua
 
