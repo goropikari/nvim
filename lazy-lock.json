@@ -43,6 +43,7 @@
   "openscad.nvim": { "branch": "main", "commit": "bf99a48bff318ceb28646d27f29f925ba0b10af0" },
   "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
   "render-markdown.nvim": { "branch": "main", "commit": "bee16b21bf47b64ceda8c9bb281d4b576d329c0f" },
+  "showkeys": { "branch": "main", "commit": "a8bcd950e19116f801ed6714fdba0d385cb24f3c" },
   "telescope-dap.nvim": { "branch": "master", "commit": "783366bd6c1e7fa0a5c59c07db37f49c805a28df" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "cf48d4dfce44e0b9a2e19a008d6ec6ea6f01a83b" },
   "telescope-termfinder.nvim": { "branch": "master", "commit": "d639bfae1ff5e644700f20d208b2224648b573cf" },

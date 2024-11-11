@@ -1119,6 +1119,11 @@ return {
     },
   },
   {
+    -- タイプしたキーを表示する
+    'nvzone/showkeys',
+    cmd = 'ShowkeysToggle',
+  },
+  {
     'goropikari/local-devcontainer.nvim',
     dev = true,
     enabled = vim.fn.executable('devcontainer') == 1,
