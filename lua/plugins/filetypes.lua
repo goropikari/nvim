@@ -43,4 +43,14 @@ return {
     ft = { 'markdown' },
     opts = {},
   },
+  {
+    'aklt/plantuml-syntax',
+  },
+  {
+    'goropikari/plantuml.nvim',
+    dev = true,
+    ft = { 'plantuml' },
+    cmd = { 'PlantumlPreview', 'PlantumlExport', 'PlantumlStartDocker' },
+    opts = {},
+  },
 }
