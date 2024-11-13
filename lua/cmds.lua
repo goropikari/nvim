@@ -1,11 +1,13 @@
+local api = vim.api
+
 -- [[ 競技プログラミング用 ]]
-vim.api.nvim_create_user_command('Make', function()
+api.nvim_create_user_command('Make', function()
   vim.cmd('messages clear')
   print(vim.fn.system({ 'make', 'test', 'ARGS=' .. vim.fn.expand('%:r') }))
   vim.cmd('messages')
 end, {})
 
-vim.api.nvim_create_user_command('DevContainerUp', function(opts)
+api.nvim_create_user_command('DevContainerUp', function(opts)
   require('local-devcontainer').up({
     remove_existing_container = opts.args == 'true',
   })
@@ -13,14 +15,43 @@ end, {
   nargs = '?',
 })
 
--- https://github.com/LazyVim/LazyVim/blob/v12.38.2/lua/lazyvim/config/autocmds.lua
+api.nvim_create_user_command('LiveServer', function(opts)
+  local dir = vim.fn.expand('%:h')
+  if dir == '' then
+    dir = vim.fn.getcwd()
+  end
+  local _cmd = {
+    'python3',
+    '-m',
+    'http.server',
+    '--directory',
+    dir,
+  }
+  vim.list_extend(_cmd, vim.split(opts.args, ' '))
 
+  local cmd = {}
+  for _, v in ipairs(_cmd) do
+    if v ~= '' then
+      table.insert(cmd, v)
+    end
+  end
+  vim.notify(vim.fn.join(cmd, ' '))
+
+  vim.system(cmd, {}, function(obj)
+    if obj.code ~= 0 then
+      vim.notify(obj.stderr, vim.log.levels.WARN)
+      return
+    end
+  end)
+end, { nargs = '*' })
+
+-- https://github.com/LazyVim/LazyVim/blob/v12.38.2/lua/lazyvim/config/autocmds.lua
 local function augroup(name)
-  return vim.api.nvim_create_augroup(name, { clear = true })
+  return api.nvim_create_augroup(name, { clear = true })
 end
 
 -- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
+api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   group = augroup('checktime'),
   callback = function()
     if vim.o.buftype ~= 'nofile' then
@@ -30,7 +61,7 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
 })
 
 -- resize splits if window got resized
-vim.api.nvim_create_autocmd({ 'VimResized' }, {
+api.nvim_create_autocmd({ 'VimResized' }, {
   group = augroup('resize_splits'),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
@@ -40,7 +71,7 @@ vim.api.nvim_create_autocmd({ 'VimResized' }, {
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+api.nvim_create_autocmd({ 'BufWritePre' }, {
   group = augroup('auto_create_dir'),
   callback = function(event)
     if event.match:match('^%w%w+:[\\/][\\/]') then
@@ -53,8 +84,8 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
+local highlight_group = api.nvim_create_augroup('YankHighlight', { clear = true })
+api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
