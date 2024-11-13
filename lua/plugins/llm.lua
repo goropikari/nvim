@@ -137,7 +137,11 @@ return {
   {
     'goropikari/ollama.nvim',
     dev = true,
-    opts = {},
+    opts = {
+      chat = {
+        model = 'qwen2.5-coder:14b',
+      },
+    },
     cmd = { 'OllamaChat' },
   },
   os.getenv('COMPANY_LLM_PLUGIN_PATH') and {
