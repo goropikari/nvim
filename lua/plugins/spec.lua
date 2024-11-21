@@ -919,6 +919,13 @@ return {
         end,
         desc = 'Search ToggleTerm',
       },
+      {
+        '<leader>Ta',
+        function()
+          require('toggleterm.terminal').Terminal:new({ hidden = false }):toggle()
+        end,
+        desc = 'Add ToggleTerm',
+      },
     },
     config = function()
       require('toggleterm').setup({
