@@ -665,6 +665,14 @@ return {
         desc = 'stage git hunk',
         mode = { 'v', 'n' },
       },
+      {
+        '<leader>gu',
+        function()
+          require('gitsigns').undo_stage_hunk()
+        end,
+        desc = 'undo stage git hunk',
+        mode = { 'n' },
+      },
     },
   },
   {
