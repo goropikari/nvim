@@ -635,11 +635,11 @@ return {
       { '<leader>sa', '<Plug>(nvim-surround-visual)', desc = 'surround add: [char]', mode = 'v' },
     },
   },
-  {
-    -- Git related plugins
-    'tpope/vim-fugitive',
-    event = 'VeryLazy',
-  },
+  -- {
+  --   -- Git related plugins
+  --   'tpope/vim-fugitive',
+  --   event = 'VeryLazy',
+  -- },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -652,6 +652,8 @@ return {
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      signs_staged_enable = false,
+      current_line_blame = true,
     },
     keys = {
       { '<leader>g', desc = 'Git' },
@@ -661,23 +663,27 @@ return {
           require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
         end,
         desc = 'stage git hunk',
-        mode = 'v',
+        mode = { 'v', 'n' },
       },
     },
   },
   {
-    -- github review
-    'pwntester/octo.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
-    },
-    opts = {
-      mappings_disable_default = false,
-    },
-    cmd = { 'Octo' },
+    'sindrets/diffview.nvim',
+    opts = {},
   },
+  -- {
+  --   -- github review
+  --   'pwntester/octo.nvim',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-telescope/telescope.nvim',
+  --     'nvim-tree/nvim-web-devicons',
+  --   },
+  --   opts = {
+  --     mappings_disable_default = false,
+  --   },
+  --   cmd = { 'Octo' },
+  -- },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -1084,8 +1090,8 @@ return {
     -- google 検索
     'voldikss/vim-browser-search',
     keys = {
-      { '<leader>w', '<Plug>SearchVisual', 'google select word', mode = 'v' },
-      { '<leader>w', '<Plug>SearchNormal', 'google select word', mode = 'n' },
+      { '<leader>w', '<Plug>SearchVisual', desc = 'google select word', mode = 'v' },
+      { '<leader>w', '<Plug>SearchNormal', desc = 'google select word', mode = 'n' },
     },
   },
   {
