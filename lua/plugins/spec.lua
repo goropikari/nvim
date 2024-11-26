@@ -635,11 +635,6 @@ return {
       { '<leader>sa', '<Plug>(nvim-surround-visual)', desc = 'surround add: [char]', mode = 'v' },
     },
   },
-  -- {
-  --   -- Git related plugins
-  --   'tpope/vim-fugitive',
-  --   event = 'VeryLazy',
-  -- },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -679,19 +674,6 @@ return {
     'sindrets/diffview.nvim',
     opts = {},
   },
-  -- {
-  --   -- github review
-  --   'pwntester/octo.nvim',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',
-  --     'nvim-telescope/telescope.nvim',
-  --     'nvim-tree/nvim-web-devicons',
-  --   },
-  --   opts = {
-  --     mappings_disable_default = false,
-  --   },
-  --   cmd = { 'Octo' },
-  -- },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
