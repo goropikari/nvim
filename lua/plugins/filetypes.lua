@@ -45,6 +45,7 @@ return {
   },
   {
     'aklt/plantuml-syntax',
+    ft = { 'plantuml' },
   },
   {
     'goropikari/plantuml.nvim',
