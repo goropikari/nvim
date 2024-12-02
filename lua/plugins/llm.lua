@@ -8,7 +8,7 @@ return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
     enabled = os.getenv('NVIM_COPILOT_ENABLE') == '1',
-    branch = 'canary',
+    version = 'v3.2.0',
     dependencies = {
       { 'github/copilot.vim' },
       { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
