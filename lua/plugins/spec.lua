@@ -636,6 +636,20 @@ return {
     },
   },
   {
+    'NeogitOrg/neogit',
+    cmd = { 'Neogit' },
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      -- 'sindrets/diffview.nvim', -- optional - Diff integration
+
+      -- Only one of these is needed.
+      'nvim-telescope/telescope.nvim', -- optional
+      -- 'ibhagwan/fzf-lua', -- optional
+      -- 'echasnovski/mini.pick', -- optional
+    },
+    config = true,
+  },
+  {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     event = 'VeryLazy',
