@@ -54,4 +54,11 @@ return {
     cmd = { 'PlantumlPreview', 'PlantumlExport', 'PlantumlStartDocker' },
     opts = {},
   },
+  {
+    'goropikari/default-new-file.nvim',
+    dev = true,
+    opts = {
+      pattern = { '*.plantuml', '*.go' },
+    },
+  },
 }
