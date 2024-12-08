@@ -1144,27 +1144,7 @@ return {
     'goropikari/local-devcontainer.nvim',
     dev = true,
     enabled = vim.fn.executable('devcontainer') == 1,
-    cmd = { 'DevContainerUp' },
-    opts = {
-      ssh = {
-        remote_sock_dir = '/home/vscode/local-devcontainer.nvim/ssh',
-      },
-      devcontainer = {
-        args = {
-          '--workspace-folder=.',
-          -- '--skip-non-blocking-commands',
-          -- '--remove-existing-container',
-          -- '--skip-post-attach=true',
-          '--skip-post-create=true',
-          '--mount',
-          'type=bind,source=' .. vim.fn.getcwd() .. ',target=/workspaces/' .. vim.fn.expand('%:p:h:t'),
-          '--mount',
-          'type=bind,source=' .. vim.fn.stdpath('config') .. ',target=/home/vscode/.config/nvim',
-          '--mount',
-          'type=bind,source=' .. os.getenv('HOME') .. '/.aws,target=/home/vscode/.aws',
-          [[--additional-features='{"ghcr.io/goropikari/devcontainer-feature/neovim:1": {},"ghcr.io/devcontainers/features/sshd:1": {}}']],
-        },
-      },
-    },
+    -- cmd = { 'DevContainerUp', 'DevContainerEditOverrideConfig' },
+    opts = {},
   },
 }
