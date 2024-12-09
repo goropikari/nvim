@@ -7,13 +7,11 @@ api.nvim_create_user_command('Make', function()
   vim.cmd('messages')
 end, {})
 
-api.nvim_create_user_command('DevContainerUp', function(opts)
-  require('local-devcontainer').up({
-    remove_existing_container = opts.args == 'true',
-  })
-end, {
-  nargs = '?',
-})
+vim.keymap.set('n', '<leader>WW', function()
+  vim.cmd('write') -- ファイルを保存
+  vim.cmd('%y') -- ファイル全体をヤンク
+  vim.cmd('Make')
+end, { noremap = true, silent = true, desc = '競プロ: Save file and yank entire file' })
 
 api.nvim_create_user_command('LiveServer', function(opts)
   local dir = vim.fn.expand('%:h')
