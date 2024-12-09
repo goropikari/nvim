@@ -1,29 +1,5 @@
 local api = vim.api
 
--- [[ 競技プログラミング用 ]]
-api.nvim_create_user_command('Make', function()
-  vim.cmd('messages clear')
-  local outpath = '/tmp/competititve_programming/'
-  vim.fn.mkdir(outpath, 'p')
-  vim.system({
-    'make',
-    'test',
-    'INPUT=' .. vim.fn.expand('%:a'),
-    'OUTPUT=' .. outpath .. vim.fn.expand('%:t:r'),
-  }, {}, function(out)
-    vim.print(out.stdout)
-    vim.schedule(function()
-      vim.cmd('messages')
-    end)
-  end)
-end, {})
-
-vim.keymap.set('n', '<leader>WW', function()
-  vim.cmd('write') -- ファイルを保存
-  vim.cmd('Make')
-  vim.cmd('%y') -- ファイル全体をヤンク
-end, { noremap = true, silent = true, desc = '競プロ: Save file and yank entire file' })
-
 api.nvim_create_user_command('LiveServer', function(opts)
   local dir = vim.fn.expand('%:h')
   if dir == '' then
