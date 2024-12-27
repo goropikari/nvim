@@ -70,7 +70,9 @@ vim.o.foldlevel = 99 -- 起動時にコードの折りたたみを無効にし�
 vim.opt.swapfile = false
 
 -- clipboard
-vim.opt.clipboard = 'unnamedplus' -- Sync with system clipboard
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
 
 -- https://neovim.io/doc/user/provider.html#clipboard-osc52
 if vim.fn.has('wsl') == 1 or os.getenv('HOSTNAME') ~= nil then
