@@ -835,7 +835,7 @@ return {
     },
     keys = {
       {
-        '<leader>a',
+        '<leader>o',
         function()
           require('aerial').toggle()
         end,
@@ -1151,7 +1151,19 @@ return {
   {
     'goropikari/atcoder.nvim',
     dev = true,
-    opts = {},
+    opts = {
+      oj = {
+        path = (function()
+          if vim.fn.executable('oj') == 1 then
+            return 'oj'
+          end
+          local oj_venv = vim.fn.fnamemodify('~/venv/bin/oj', ':p')
+          if vim.fn.executable(oj_venv) == 1 then
+            return oj_venv
+          end
+        end)(),
+      },
+    },
     keys = {
       {
         '<leader>at',
@@ -1159,6 +1171,29 @@ return {
           require('atcoder').test()
         end,
         desc = 'atcoder test',
+      },
+      {
+        '<leader>ai',
+        function()
+          require('atcoder').insert_problem_url()
+          vim.api.nvim_buf_set_lines(0, 1, 1, false, { string.format(vim.bo.commentstring, vim.fn.strftime('%c')) })
+        end,
+        desc = 'insert atcoder url',
+      },
+    },
+  },
+  {
+    'sankantsu/telescope-zenn.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    keys = {
+      {
+        '<leader>zz',
+        function()
+          require('telescope').extensions.zenn.article_picker()
+        end,
+        desc = 'zenn article picker',
       },
     },
   },
