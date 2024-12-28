@@ -648,6 +648,13 @@ return {
       -- 'echasnovski/mini.pick', -- optional
     },
     config = true,
+    keys = {
+      {
+        '<leader>G',
+        '<cmd>Neogit<cr>',
+        desc = 'Neogit',
+      },
+    },
   },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
