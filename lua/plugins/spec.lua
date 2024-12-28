@@ -1144,7 +1144,7 @@ return {
     },
   },
   {
-    'sankantsu/telescope-zenn.nvim',
+    'goropikari/telescope-zenn.nvim',
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
