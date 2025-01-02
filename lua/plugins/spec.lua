@@ -231,6 +231,18 @@ return {
       --   end,
       --   desc = 'Search Diagnostics',
       -- },
+      {
+        -- zenn or hugo article list
+        '<leader>zz',
+        function()
+          if vim.uv.fs_stat('content') then
+            require('telescope').extensions.hugo.hugo()
+          elseif vim.uv.fs_stat('articles') then
+            require('telescope').extensions.zenn.zenn()
+          end
+        end,
+        desc = 'search article',
+      },
     },
   },
   {
@@ -391,6 +403,7 @@ return {
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    version = '*',
     event = 'VeryLazy',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -799,14 +812,14 @@ return {
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
     keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format({ async = true, lsp_format = 'fallback' })
-        end,
-        mode = '',
-        desc = 'Format buffer',
-      },
+      -- {
+      --   '<leader>f',
+      --   function()
+      --     require('conform').format({ async = true, lsp_format = 'fallback' })
+      --   end,
+      --   mode = '',
+      --   desc = 'Format buffer',
+      -- },
     },
     opts = {
       notify_on_error = false,
@@ -853,6 +866,7 @@ return {
   {
     -- 開いている window を番号で選択する
     'goropikari/window-selector.nvim',
+    dev = true,
     keys = {
       {
         '<leader>CC',
@@ -909,14 +923,14 @@ return {
     config = function()
       require('toggleterm').setup({
         open_mapping = [[<c-\>]],
-        direction = 'float',
-        -- direction = 'horizontal',
-        -- winbar = {
-        --   enabled = true,
-        --   name_formatter = function(term) --  term: Terminal
-        --     return term.name
-        --   end,
-        -- },
+        -- direction = 'float',
+        direction = 'horizontal',
+        winbar = {
+          enabled = true,
+          name_formatter = function(term) --  term: Terminal
+            return term.name
+          end,
+        },
       })
       require('telescope').load_extension('termfinder')
     end,
@@ -1055,11 +1069,6 @@ return {
     end,
   },
   {
-    -- avoid nested neovim session
-    'willothy/flatten.nvim',
-    opts = {},
-  },
-  {
     -- google 検索
     'voldikss/vim-browser-search',
     keys = {
@@ -1148,21 +1157,47 @@ return {
         end,
         desc = 'insert atcoder url',
       },
+      {
+        '<leader>acd',
+        function()
+          require('atcoder').create_test_dir()
+        end,
+        desc = 'create test directory for non atcoder site',
+      },
     },
   },
   {
     'goropikari/telescope-zenn.nvim',
+    dev = true,
+    lazy = true,
     dependencies = {
       'nvim-telescope/telescope.nvim',
-    },
-    keys = {
       {
-        '<leader>zz',
-        function()
-          require('telescope').extensions.zenn.article_picker()
-        end,
-        desc = 'zenn article picker',
+        'goropikari/front-matter.nvim',
+        dev = true,
+        opts = {},
+        build = vim.fn.executable('go') == 1 and 'make build' or 'make setup',
       },
     },
+  },
+  {
+    'goropikari/telescope-hugo.nvim',
+    dev = true,
+    lazy = true,
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+      {
+        'goropikari/front-matter.nvim',
+        dev = true,
+        opts = {},
+        build = vim.fn.executable('go') == 1 and 'make build' or 'make setup',
+      },
+    },
+  },
+  {
+    'goropikari/lua-repl.nvim',
+    dev = true,
+    cmd = { 'LuaREPL' },
+    opts = {},
   },
 }

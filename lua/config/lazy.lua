@@ -52,16 +52,18 @@ require('lazy').setup({
     reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
       disabled_plugins = {
+        -- https://github.com/neovim/neovim/tree/43d552c56648bc3125c7509b3d708b6bf6c0c09c/runtime/plugin
         'gzip',
+        'man', -- man page
+        'netrw',
+        'netrwPlugin',
+        'netrwSettings',
+        'rplugin', -- remote plugin
         'tarPlugin',
         'tohtml',
         'tutor',
         'zipPlugin', -- "netrwFileHandlers",
-        'netrw',
-        'netrwPlugin',
-        'netrwSettings',
-        'man', -- man page
-        'rplugin', -- remote plugin
+        'vim._comment',
       },
     },
   },

@@ -147,6 +147,7 @@ return {
           -- filetypes = { ...},
           -- capabilities = {},
           settings = {
+            -- https://github.com/LuaLS/lua-language-server/blob/cb964c600570e6258d3c0a3f3f424a35a3a4ef64/doc/en-us/config.md
             Lua = {
               completion = {
                 callSnippet = 'Replace',
@@ -230,6 +231,8 @@ return {
         'stylua', -- Used to format Lua code
         'goimports',
         'gofumpt',
+        'delve',
+        'codelldb',
       })
       require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 

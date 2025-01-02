@@ -130,28 +130,20 @@ return {
     ft = { 'c', 'cpp' },
     enabled = vim.fn.executable('g++') == 1 or vim.fn.executable('gcc') == 1,
     opts = {
-      configurations = {
-        {
-          name = 'Build and debug active file with test.txt',
-          type = 'cppdbg',
-          request = 'launch',
-          program = '/tmp/${fileBasenameNoExtension}_dap',
-          cwd = '${fileDirname}',
-          args = { '<', 'test.txt' },
-          build = { 'make', 'build', 'INPUT=' .. vim.fn.expand('%'), 'OUTPUT=/tmp/' .. vim.fn.expand('%:t:r') .. '_dap' },
-        },
-      },
+      -- configurations = {},
     },
   },
   {
     'nvim-neotest/neotest',
+    version = '*',
     dependencies = {
+      'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
       -- 'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
       {
         'fredrikaverpil/neotest-golang',
-        -- version = '*',
+        version = '*',
         enabled = vim.fn.executable('go') == 1,
       },
     },
@@ -208,10 +200,8 @@ return {
           executable = 'go',
           plugin_name = 'neotest-golang',
           opts = {
-            args = { '--shuffle=on' },
-            experimental = {
-              test_table = true,
-            },
+            go_test_args = { '--shuffle=on' },
+            testify_enabled = true,
           },
         },
       }
@@ -237,6 +227,7 @@ return {
           enabled = true,
           open_on_run = true,
         },
+
         -- your neotest config here
         adapters = adapters,
         log_level = 3,
