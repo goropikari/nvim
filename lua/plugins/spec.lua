@@ -385,28 +385,28 @@ return {
   --     vim.system({ 'mkdir', '-p', vim.fn.stdpath('state') .. '/bookmarks.nvim' })
   --   end,
   -- },
-  -- {
-  --   -- buffer を tab で表示する
-  --   'romgrk/barbar.nvim',
-  --   event = 'VeryLazy',
-  --   dependencies = {
-  --     'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-  --     'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-  --   },
-  --   init = function()
-  --     vim.g.barbar_auto_setup = false
-  --   end,
-  --   opts = {
-  --     animation = false,
-  --   },
-  --   version = '^1.0.0', -- optional: only update when a new 1.x version is released
-  --   keys = {
-  --     { '<leader>bn', '<Cmd>BufferNext<CR>', desc = 'Buffer Next' },
-  --     { '<leader>bN', '<Cmd>BufferPrevious<CR>', desc = 'Buffer Previous' },
-  --     { '<leader>bca', '<Cmd>BufferCloseAllButCurrent<CR><C-w><C-o><CR>', desc = 'close all buffer but current' },
-  --     { '<leader>bcc', '<Cmd>BufferClose<CR><Cmd>q<CR>', desc = 'close buffer' },
-  --   },
-  -- },
+  {
+    -- buffer を tab で表示する
+    'romgrk/barbar.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false
+    end,
+    opts = {
+      animation = false,
+    },
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
+    keys = {
+      { '<leader>bn', '<Cmd>BufferNext<CR>', desc = 'Buffer Next' },
+      { '<leader>bN', '<Cmd>BufferPrevious<CR>', desc = 'Buffer Previous' },
+      { '<leader>bca', '<Cmd>BufferCloseAllButCurrent<CR><C-w><C-o><CR>', desc = 'close all buffer but current' },
+      { '<leader>bcc', '<Cmd>BufferClose<CR><Cmd>q<CR>', desc = 'close buffer' },
+    },
+  },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
