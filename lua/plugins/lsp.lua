@@ -8,7 +8,6 @@ return {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- -- Useful status updates for LSP.
       -- { 'j-hui/fidget.nvim', opts = {} },
@@ -223,19 +222,6 @@ return {
       end
 
       require('mason').setup()
-
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(lsp_servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'goimports',
-        'gofumpt',
-        'delve',
-        'codelldb',
-      })
-      require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
-
       require('mason-lspconfig').setup({
         handlers = {
           function(server_name)
@@ -263,5 +249,24 @@ return {
         },
       })
     end,
+  },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
+    opts = {
+      ensure_installed = {
+        'clangd',
+        'codelldb',
+        'delve',
+        'gofumpt',
+        'goimports',
+        'gopls',
+        'jsonls',
+        'lua_ls',
+        'ruby_lsp',
+        'stylua', -- Used to format Lua code
+        'typos_lsp',
+      },
+    },
   },
 }
