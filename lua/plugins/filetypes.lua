@@ -57,6 +57,7 @@ return {
   {
     'goropikari/default-new-file.nvim',
     dev = true,
+    ft = { 'plantuml', 'go', 'cpp' },
     opts = {
       pattern = { '*.plantuml', '*.go', '*.cpp' },
     },

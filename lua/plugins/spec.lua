@@ -2,7 +2,7 @@ return {
   {
     -- colorscheme
     'ellisonleao/gruvbox.nvim',
-    event = 'VeryLazy',
+    lazy = true,
     opts = {
       italic = {
         strings = false,
@@ -22,6 +22,24 @@ return {
     config = function(plugin, opts)
       require('gruvbox').setup(opts)
       vim.cmd('colorscheme gruvbox')
+    end,
+  },
+  {
+    'neanias/everforest-nvim',
+    event = 'VeryLazy',
+    -- opts = {
+    --   italic = false,
+    -- },
+    config = function()
+      require('everforest').setup({
+        italic = false,
+        disable_italic_comments = true,
+        on_highlights = function(hl, palette)
+          hl.LineNr = { fg = '#C0D4C0' }
+          hl.Comment = { fg = '#50B010' }
+        end,
+      })
+      vim.cmd('colorscheme everforest')
     end,
   },
   {
@@ -245,35 +263,30 @@ return {
       },
     },
   },
-  {
-    -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
-    event = 'VimEnter',
-    -- dependencies = {
-    --   dir = vim.fn.stdpath('config') .. '/lua/custom/plugins/codecompanion-lualine',
-    -- },
-    opts = {
-      options = {
-        icons_enabled = true,
-        theme = 'wombat',
-        component_separators = '|',
-        section_separators = '',
-      },
-      sections = {
-        lualine_c = {
-          {
-            'filename',
-            path = 3,
-          },
-        },
-        lualine_x = {
-          {
-            'codecompanion',
-          },
-        },
-      },
-    },
-  },
+  -- {
+  --   -- Set lualine as statusline
+  --   'nvim-lualine/lualine.nvim',
+  --   event = 'VimEnter',
+  --   -- dependencies = {
+  --   --   dir = vim.fn.stdpath('config') .. '/lua/custom/plugins/codecompanion-lualine',
+  --   -- },
+  --   opts = {
+  --     options = {
+  --       icons_enabled = true,
+  --       theme = 'wombat',
+  --       component_separators = '|',
+  --       section_separators = '',
+  --     },
+  --     sections = {
+  --       lualine_c = {
+  --         {
+  --           'filename',
+  --           path = 3,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
   {
     -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
     -- command が pop up window で表示される
@@ -329,77 +342,71 @@ return {
       },
     },
   },
-  {
-    -- vim.ui.input を cursor で選択できるようにする
-    'stevearc/dressing.nvim',
-    event = 'VimEnter',
-    opts = {},
-  },
-  {
-    'goropikari/bookmarks.nvim',
-    dev = true,
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
-    opts = {
-      save_file = nil,
-    },
-    keys = {
-      {
-        '<leader>ra',
-        function()
-          require('bookmarks').bookmark_toggle()
-        end,
-        desc = 'bookmark toggle',
-      },
-      {
-        '<leader>rcc',
-        function()
-          require('bookmarks').bookmark_clean()
-        end,
-        desc = 'bookmark clear at current buffer',
-      },
-      {
-        '<leader>rca',
-        function()
-          require('bookmarks').bookmark_clear_all()
-        end,
-        desc = 'bookmark clear all',
-      },
-      {
-        '<leader>rl',
-        function()
-          require('telescope').extensions.bookmarks.list()
-        end,
-        desc = 'bookmark list',
-      },
-    },
-    build = function()
-      vim.system({ 'mkdir', '-p', vim.fn.stdpath('state') .. '/bookmarks.nvim' })
-    end,
-  },
-  {
-    -- buffer を tab で表示する
-    'romgrk/barbar.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-    },
-    init = function()
-      vim.g.barbar_auto_setup = false
-    end,
-    opts = {
-      animation = false,
-    },
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
-    keys = {
-      { '<leader>bn', '<Cmd>BufferNext<CR>', desc = 'Buffer Next' },
-      { '<leader>bN', '<Cmd>BufferPrevious<CR>', desc = 'Buffer Previous' },
-      { '<leader>bca', '<Cmd>BufferCloseAllButCurrent<CR><C-w><C-o><CR>', desc = 'close all buffer but current' },
-      { '<leader>bcc', '<Cmd>BufferClose<CR><Cmd>q<CR>', desc = 'close buffer' },
-    },
-  },
+  -- {
+  --   'goropikari/bookmarks.nvim',
+  --   dev = true,
+  --   dependencies = {
+  --     'nvim-telescope/telescope.nvim',
+  --   },
+  --   opts = {
+  --     save_file = nil,
+  --   },
+  --   keys = {
+  --     {
+  --       '<leader>ra',
+  --       function()
+  --         require('bookmarks').bookmark_toggle()
+  --       end,
+  --       desc = 'bookmark toggle',
+  --     },
+  --     {
+  --       '<leader>rcc',
+  --       function()
+  --         require('bookmarks').bookmark_clean()
+  --       end,
+  --       desc = 'bookmark clear at current buffer',
+  --     },
+  --     {
+  --       '<leader>rca',
+  --       function()
+  --         require('bookmarks').bookmark_clear_all()
+  --       end,
+  --       desc = 'bookmark clear all',
+  --     },
+  --     {
+  --       '<leader>rl',
+  --       function()
+  --         require('telescope').extensions.bookmarks.list()
+  --       end,
+  --       desc = 'bookmark list',
+  --     },
+  --   },
+  --   build = function()
+  --     vim.system({ 'mkdir', '-p', vim.fn.stdpath('state') .. '/bookmarks.nvim' })
+  --   end,
+  -- },
+  -- {
+  --   -- buffer を tab で表示する
+  --   'romgrk/barbar.nvim',
+  --   event = 'VeryLazy',
+  --   dependencies = {
+  --     'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+  --     'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+  --   },
+  --   init = function()
+  --     vim.g.barbar_auto_setup = false
+  --   end,
+  --   opts = {
+  --     animation = false,
+  --   },
+  --   version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  --   keys = {
+  --     { '<leader>bn', '<Cmd>BufferNext<CR>', desc = 'Buffer Next' },
+  --     { '<leader>bN', '<Cmd>BufferPrevious<CR>', desc = 'Buffer Previous' },
+  --     { '<leader>bca', '<Cmd>BufferCloseAllButCurrent<CR><C-w><C-o><CR>', desc = 'close all buffer but current' },
+  --     { '<leader>bcc', '<Cmd>BufferClose<CR><Cmd>q<CR>', desc = 'close buffer' },
+  --   },
+  -- },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -1029,7 +1036,7 @@ return {
             local uri = vim.fn.expand('<cWORD>')
             local pattern = '[%w-]+:.*'
             if string.match(uri, pattern) then
-              vim.system({ 'xdg-open', uri })
+              vim.ui.open(uri)
             else
               vim.notify('not uri')
             end
@@ -1053,8 +1060,8 @@ return {
   {
     -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    event = 'BufEnter',
+    -- dependencies = { 'nvim-lua/plenary.nvim' },
     -- opts = { signs = false },
     config = function()
       require('todo-comments').setup({
@@ -1121,8 +1128,9 @@ return {
   {
     'goropikari/local-devcontainer.nvim',
     dev = true,
-    enabled = vim.fn.executable('devcontainer') == 1,
-    -- cmd = { 'DevContainerUp', 'DevContainerEditOverrideConfig' },
+    build = 'make setup',
+    enabled = vim.fn.executable('devcontainer') == 1 and vim.fn.isdirectory('.devcontainer'),
+    cmd = { 'DevContainerUp', 'DevContainerEditOverrideConfig' },
     opts = {},
   },
   {

@@ -5,7 +5,10 @@ return {
       {
         -- Creates a beautiful debugger UI
         'rcarriga/nvim-dap-ui',
-        dependencies = { 'nvim-neotest/nvim-nio' },
+        dependencies = {
+          'nvim-neotest/nvim-nio',
+          'stevearc/dressing.nvim', -- vim.ui.input を cursor で選択できるようにする
+        },
         config = function()
           local dap = require('dap')
           local dapui = require('dapui')
