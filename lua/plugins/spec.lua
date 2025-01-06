@@ -1175,9 +1175,10 @@ return {
     },
   },
   {
-    'goropikari/telescope-zenn.nvim',
+    'goropikari/zenn.nvim',
     dev = true,
-    lazy = true,
+    config = true,
+    cmd = { 'Zenn' },
     dependencies = {
       'nvim-telescope/telescope.nvim',
       {
