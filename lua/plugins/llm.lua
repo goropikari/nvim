@@ -3,11 +3,9 @@ local utils = require('utils')
 return {
   {
     'github/copilot.vim',
-    enabled = os.getenv('NVIM_COPILOT_ENABLE') == '1',
   },
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    enabled = os.getenv('NVIM_COPILOT_ENABLE') == '1',
     version = 'v3.2.0',
     dependencies = {
       { 'github/copilot.vim' },
