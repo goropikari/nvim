@@ -3,9 +3,12 @@ local utils = require('utils')
 return {
   {
     'github/copilot.vim',
+    event = 'BufEnter',
+    enabled = os.getenv('DISABLE_COPILOT') ~= '1',
   },
   {
     'CopilotC-Nvim/CopilotChat.nvim',
+    enabled = os.getenv('DISABLE_COPILOT') ~= '1',
     version = 'v3.2.0',
     dependencies = {
       { 'github/copilot.vim' },
@@ -16,9 +19,10 @@ return {
       debug = false,
       window = {
         layout = 'vertical',
-        width = 0.15,
+        width = 0.3,
       },
     },
+    cmd = { 'CopilotChat' },
     keys = {
       {
         '<leader>gcc',

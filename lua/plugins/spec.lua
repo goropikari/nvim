@@ -1134,7 +1134,7 @@ return {
     opts = {},
   },
   {
-    'goropikari/atcoder.nvim',
+    'goropikari/online-judge.nvim',
     dev = true,
     opts = {
       oj = {
@@ -1153,14 +1153,14 @@ return {
       {
         '<leader>at',
         function()
-          require('atcoder').test()
+          require('online-judge').test()
         end,
-        desc = 'atcoder test',
+        desc = 'online-judge test',
       },
       {
         '<leader>ai',
         function()
-          require('atcoder').insert_problem_url()
+          require('online-judge').insert_problem_url()
           vim.api.nvim_buf_set_lines(0, 1, 1, false, { string.format(vim.bo.commentstring, vim.fn.strftime('%c')) })
         end,
         desc = 'insert atcoder url',
@@ -1168,9 +1168,9 @@ return {
       {
         '<leader>acd',
         function()
-          require('atcoder').create_test_dir()
+          require('online-judge').create_test_dir()
         end,
-        desc = 'create test directory for non atcoder site',
+        desc = 'create test directory for non supported site',
       },
     },
   },

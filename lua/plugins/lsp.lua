@@ -157,6 +157,7 @@ return {
           },
         },
         jsonls = {},
+        biome = {},
       }
 
       for executable, config in pairs({
