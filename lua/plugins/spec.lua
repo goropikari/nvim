@@ -27,9 +27,6 @@ return {
   {
     'neanias/everforest-nvim',
     event = 'VeryLazy',
-    -- opts = {
-    --   italic = false,
-    -- },
     config = function()
       require('everforest').setup({
         italic = false,

@@ -1,30 +1,27 @@
 return {
   {
     'mfussenegger/nvim-dap',
+    version = '*',
     dependencies = {
-      {
-        -- Creates a beautiful debugger UI
-        'rcarriga/nvim-dap-ui',
-        dependencies = {
-          'nvim-neotest/nvim-nio',
-          'stevearc/dressing.nvim', -- vim.ui.input を cursor で選択できるようにする
-        },
-        config = function()
-          local dap = require('dap')
-          local dapui = require('dapui')
-          dapui.setup()
-          dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-          dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-          dap.listeners.before.event_exited['dapui_config'] = dapui.close
-        end,
-      },
+      -- Creates a beautiful debugger UI
+      'rcarriga/nvim-dap-ui',
+      'nvim-neotest/nvim-nio',
+      'stevearc/dressing.nvim', -- vim.ui.input を cursor で選択できるようにする
+      'nvim-telescope/telescope-dap.nvim',
       {
         -- code 中に変数の値を表示する
         'theHamsta/nvim-dap-virtual-text',
         opts = {},
       },
-      'nvim-telescope/telescope-dap.nvim',
     },
+    config = function()
+      local dap = require('dap')
+      local dapui = require('dapui')
+      dapui.setup()
+      dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+      dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+      dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    end,
     keys = {
       { '<leader>d', desc = 'Debug' },
       {

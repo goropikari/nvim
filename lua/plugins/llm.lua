@@ -3,13 +3,14 @@ local utils = require('utils')
 return {
   {
     'github/copilot.vim',
+    version = '*',
     event = 'BufEnter',
-    enabled = os.getenv('DISABLE_COPILOT') ~= '1',
+    cond = os.getenv('DISABLE_COPILOT') ~= '1',
   },
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    enabled = os.getenv('DISABLE_COPILOT') ~= '1',
-    version = 'v3.2.0',
+    version = '*',
+    cond = os.getenv('DISABLE_COPILOT') ~= '1',
     dependencies = {
       { 'github/copilot.vim' },
       { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
@@ -136,18 +137,8 @@ return {
   --     },
   --   },
   -- },
-  {
-    'goropikari/ollama.nvim',
-    dev = true,
-    opts = {
-      chat = {
-        model = 'qwen2.5-coder:14b',
-      },
-    },
-    cmd = { 'OllamaChat' },
-  },
   os.getenv('COMPANY_LLM_PLUGIN_PATH') and {
-    dir = os.getenv('COMPANY_LLM_PLUGIN_PATH'),
-    opts = {},
-  },
+      dir = os.getenv('COMPANY_LLM_PLUGIN_PATH'),
+      opts = {},
+    },
 }

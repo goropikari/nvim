@@ -63,7 +63,6 @@ require('lazy').setup({
         'tohtml',
         'tutor',
         'zipPlugin', -- "netrwFileHandlers",
-        'vim._comment',
       },
     },
   },
