@@ -489,6 +489,14 @@ return {
       end, 0)
     end,
   },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      on_attach = function()
+        return true
+      end,
+    },
+  },
   -- {
   --   -- indent を見やすくする
   --   'shellRaining/hlchunk.nvim',
@@ -1197,6 +1205,43 @@ return {
         dev = true,
         opts = {},
         build = vim.fn.executable('go') == 1 and 'make build' or 'make setup',
+      },
+    },
+    keys = {
+      {
+        '<leader>ha',
+        function()
+          vim.ui.input('article file name', function(input)
+            vim.system({ 'hugo', 'new', 'content', input }, { text = true }, function(out)
+              if out.code ~= 0 then
+                vim.notify(out.stderr, vim.log.levels.ERROR)
+              end
+            end)
+          end)
+        end,
+        desc = 'add hugo content',
+      },
+      {
+        '<leader>ho',
+        function()
+          vim.system({ 'hugo', 'server', '-D' }, {
+            text = true,
+            stdout = function(err, out)
+              if err then
+                vim.notify(err, vim.log.levels.ERROR)
+                return
+              end
+
+              local hugo_open = vim.g.hugo_open
+              local url = out:match('http://[%a%p%d]*')
+              if url and not hugo_open then
+                vim.ui.open(url)
+                vim.g.hugo_open = true
+              end
+            end,
+          })
+        end,
+        desc = 'hugo server',
       },
     },
   },
