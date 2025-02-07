@@ -20,8 +20,9 @@ return {
       debug = false,
       window = {
         layout = 'vertical',
-        width = 0.3,
+        width = 0.4,
       },
+      model = 'claude-3.5-sonnet',
     },
     cmd = { 'CopilotChat' },
     keys = {
