@@ -239,6 +239,13 @@ return {
         end,
         desc = 'Search by Grep',
       },
+      {
+        '<leader>sp',
+        function()
+          require('telescope.builtin').pickers()
+        end,
+        desc = 'Lists the previous pickers',
+      },
       -- {
       --   '<leader>sd',
       --   function()
@@ -339,49 +346,6 @@ return {
       },
     },
   },
-  -- {
-  --   'goropikari/bookmarks.nvim',
-  --   dev = true,
-  --   dependencies = {
-  --     'nvim-telescope/telescope.nvim',
-  --   },
-  --   opts = {
-  --     save_file = nil,
-  --   },
-  --   keys = {
-  --     {
-  --       '<leader>ra',
-  --       function()
-  --         require('bookmarks').bookmark_toggle()
-  --       end,
-  --       desc = 'bookmark toggle',
-  --     },
-  --     {
-  --       '<leader>rcc',
-  --       function()
-  --         require('bookmarks').bookmark_clean()
-  --       end,
-  --       desc = 'bookmark clear at current buffer',
-  --     },
-  --     {
-  --       '<leader>rca',
-  --       function()
-  --         require('bookmarks').bookmark_clear_all()
-  --       end,
-  --       desc = 'bookmark clear all',
-  --     },
-  --     {
-  --       '<leader>rl',
-  --       function()
-  --         require('telescope').extensions.bookmarks.list()
-  --       end,
-  --       desc = 'bookmark list',
-  --     },
-  --   },
-  --   build = function()
-  --     vim.system({ 'mkdir', '-p', vim.fn.stdpath('state') .. '/bookmarks.nvim' })
-  --   end,
-  -- },
   {
     -- buffer を tab で表示する
     'romgrk/barbar.nvim',
@@ -1125,11 +1089,11 @@ return {
       },
     },
   },
-  {
-    -- タイプしたキーを表示する
-    'nvzone/showkeys',
-    cmd = 'ShowkeysToggle',
-  },
+  -- {
+  --   -- タイプしたキーを表示する
+  --   'nvzone/showkeys',
+  --   cmd = 'ShowkeysToggle',
+  -- },
   {
     'goropikari/local-devcontainer.nvim',
     dev = true,
