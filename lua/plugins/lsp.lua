@@ -266,6 +266,8 @@ return {
         'lua_ls',
         'ruby_lsp',
         'stylua', -- Used to format Lua code
+        'markdownlint-cli2',
+        'cbfmt',
         'typos_lsp',
       },
     },
