@@ -1106,8 +1106,10 @@ return {
   {
     'goropikari/online-judge.nvim',
     dev = true,
+    build = 'go install github.com/goropikari/yosupo_judge_client/cmd/yosupocl',
     opts = {
       oj = {
+        tle = 3,
         path = (function()
           if vim.fn.executable('oj') == 1 then
             return 'oj'
@@ -1130,7 +1132,14 @@ return {
       {
         '<leader>ai',
         function()
-          require('online-judge').insert_problem_url()
+          if vim.fn.expand('%:p:h:t') == 'yosupo' then
+            local name = vim.fn.expand('%:p:t:r')
+            vim.api.nvim_buf_set_lines(0, 0, 1, false, {
+              string.format(vim.bo.commentstring, 'http://localhost:5173/problem/' .. name),
+            })
+          else
+            require('online-judge').insert_problem_url()
+          end
           vim.api.nvim_buf_set_lines(0, 1, 1, false, { string.format(vim.bo.commentstring, vim.fn.strftime('%c')) })
         end,
         desc = 'insert atcoder url',
@@ -1141,6 +1150,72 @@ return {
           require('online-judge').create_test_dir()
         end,
         desc = 'create test directory for non supported site',
+      },
+      {
+        '<leader>agi',
+        function()
+          local suffix = vim.fn.expand('%:p:t:r')
+          local filename_with_ext = string.format('geni_%s.py', suffix)
+          vim.cmd('split')
+          vim.cmd('e ' .. filename_with_ext)
+
+          local buf = vim.fn.bufnr(filename_with_ext)
+          vim.keymap.set('n', '<F5>', function()
+            vim.system({
+              'oj',
+              'g/i',
+              '-d',
+              'test_' .. suffix,
+              'python3 ' .. filename_with_ext,
+            }, { text = true }, function(out)
+              if out.code ~= 0 then
+                vim.notify(out.stderr, vim.log.levels.ERROR)
+              else
+                vim.notify(out.stdout)
+              end
+            end)
+          end, { buffer = buf, noremap = true, silent = true })
+        end,
+        desc = 'generate random input testcase',
+      },
+      {
+        '<leader>ago',
+        function()
+          local suffix = vim.fn.expand('%:p:t:r')
+          local filename = string.format('geno_%s', suffix)
+          local filename_with_ext = filename .. '.cpp'
+          vim.cmd('split')
+          vim.cmd('e ' .. filename_with_ext)
+
+          local buf = vim.fn.bufnr(filename_with_ext)
+          vim.keymap.set('n', '<F5>', function()
+            vim.system({
+              'make',
+              vim.fn.fnamemodify(filename_with_ext, ':t:r'),
+            }, { text = true }, function(out)
+              if out.code ~= 0 then
+                vim.notify(out.stderr, vim.log.levels.ERROR)
+              else
+                vim.notify(out.stdout)
+                vim.system({
+                  'oj',
+                  'g/o',
+                  '-d',
+                  'test_' .. suffix,
+                  '-c',
+                  './' .. filename,
+                }, { text = true }, function(out2)
+                  if out2.code ~= 0 then
+                    vim.notify(out2.stderr, vim.log.levels.ERROR)
+                  else
+                    vim.notify(out2.stdout)
+                  end
+                end)
+              end
+            end)
+          end, { buffer = buf, noremap = true, silent = true })
+        end,
+        desc = 'generate random output testcase',
       },
     },
   },
