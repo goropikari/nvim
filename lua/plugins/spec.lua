@@ -1132,14 +1132,18 @@ return {
       {
         '<leader>ai',
         function()
-          if vim.fn.expand('%:p:h:t') == 'yosupo' then
-            local name = vim.fn.expand('%:p:t:r')
-            vim.api.nvim_buf_set_lines(0, 0, 1, false, {
-              string.format(vim.bo.commentstring, 'http://localhost:5173/problem/' .. name),
-            })
+          -- insert problem url
+          if vim.fn.expand('%:p'):match('yosupo') then
+            require('online-judge.service.yosupo').insert_problem_url()
+          elseif vim.fn.expand('%:p'):match('aoj') then
+            require('online-judge.service.aoj').insert_problem_url()
+          elseif vim.fn.expand('%:p'):match('atcoder') then
+            require('online-judge.service.atcoder').insert_problem_url()
           else
-            require('online-judge').insert_problem_url()
+            require('online-judge.service.null').insert_problem_url()
           end
+
+          -- insert timestamp
           vim.api.nvim_buf_set_lines(0, 1, 1, false, { string.format(vim.bo.commentstring, vim.fn.strftime('%c')) })
         end,
         desc = 'insert atcoder url',
