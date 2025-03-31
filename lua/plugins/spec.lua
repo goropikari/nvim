@@ -786,20 +786,14 @@ return {
     -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      -- {
-      --   '<leader>f',
-      --   function()
-      --     require('conform').format({ async = true, lsp_format = 'fallback' })
-      --   end,
-      --   mode = '',
-      --   desc = 'Format buffer',
-      -- },
-    },
+    cmd = { 'ConformInfo', 'ConformEnable', 'ConformDisable' },
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
+
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
@@ -821,6 +815,27 @@ return {
         markdown = { 'markdownlint-cli2', 'cbfmt' },
       },
     },
+    config = function(_, opts)
+      require('conform').setup(opts)
+
+      vim.api.nvim_create_user_command('ConformDisable', function(args)
+        if args.bang then
+          -- FormatDisable! will disable formatting just for this buffer
+          vim.b.disable_autoformat = true
+        else
+          vim.g.disable_autoformat = true
+        end
+      end, {
+        desc = 'Disable autoformat-on-save',
+        bang = true,
+      })
+      vim.api.nvim_create_user_command('ConformEnable', function()
+        vim.b.disable_autoformat = false
+        vim.g.disable_autoformat = false
+      end, {
+        desc = 'Re-enable autoformat-on-save',
+      })
+    end,
   },
   {
     'stevearc/aerial.nvim',
@@ -1106,10 +1121,10 @@ return {
   {
     'goropikari/online-judge.nvim',
     dev = true,
-    build = 'go install github.com/goropikari/yosupo_judge_client/cmd/yosupocl',
+    build = 'go install github.com/goropikari/yosupo_judge_client/cmd/yosupocl@latest',
     opts = {
       oj = {
-        tle = 3,
+        tle = 5,
         path = (function()
           if vim.fn.executable('oj') == 1 then
             return 'oj'

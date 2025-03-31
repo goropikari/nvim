@@ -119,6 +119,7 @@ return {
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
             end, 'Toggle Inlay Hints')
           end
+          vim.diagnostic.config({ virtual_lines = true })
         end,
       })
 

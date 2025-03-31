@@ -59,7 +59,7 @@ return {
     dev = true,
     -- ft = { 'plantuml', 'go', 'cpp' },
     opts = {
-      pattern = { '*.plantuml', '*.go', '*.cpp' },
+      pattern = { '*.plantuml', '*.go', '*.cpp', '*.py' },
     },
   },
 }
