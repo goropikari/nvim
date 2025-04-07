@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 return {
   {
     -- LSP Configuration & Plugins
@@ -87,7 +85,7 @@ return {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
@@ -114,12 +112,18 @@ return {
           -- code, if the language server you are using supports them
           --
           -- This may be unwanted, since they displace some of your code
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
             map('<leader>lth', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
             end, 'Toggle Inlay Hints')
           end
-          vim.diagnostic.config({ virtual_lines = true })
+          vim.diagnostic.config({
+            virtual_lines = {
+              format = function(diagnostic)
+                return string.format('%s: %s: %s', diagnostic.source, diagnostic.code, diagnostic.message)
+              end,
+            },
+          })
         end,
       })
 
@@ -225,6 +229,8 @@ return {
 
       require('mason').setup()
       require('mason-lspconfig').setup({
+        ensure_installed = {},
+        automatic_installation = false,
         handlers = {
           function(server_name)
             local server = lsp_servers[server_name] or {}
@@ -234,19 +240,6 @@ return {
 
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      })
-
-      -- diagnostics の出所と理由を表示するようにする
-      -- https://dev.classmethod.jp/articles/eetann-change-neovim-lsp-diagnostics-format/
-      vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        update_in_insert = false,
-        virtual_text = {
-          spacing = 0,
-          suffix = function(diagnostic)
-            -- print(vim.inspect(diagnostic))
-            return string.format(' (%s: %s)', diagnostic.source, diagnostic.code)
           end,
         },
       })

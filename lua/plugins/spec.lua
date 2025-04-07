@@ -70,7 +70,7 @@ return {
     end,
     init = function()
       if vim.fn.argc(-1) == 1 then
-        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        local stat = vim.uv.fs_stat(vim.fn.argv(0))
         if stat and stat.type == 'directory' then
           require('neo-tree')
         end
@@ -267,30 +267,6 @@ return {
       },
     },
   },
-  -- {
-  --   -- Set lualine as statusline
-  --   'nvim-lualine/lualine.nvim',
-  --   event = 'VimEnter',
-  --   -- dependencies = {
-  --   --   dir = vim.fn.stdpath('config') .. '/lua/custom/plugins/codecompanion-lualine',
-  --   -- },
-  --   opts = {
-  --     options = {
-  --       icons_enabled = true,
-  --       theme = 'wombat',
-  --       component_separators = '|',
-  --       section_separators = '',
-  --     },
-  --     sections = {
-  --       lualine_c = {
-  --         {
-  --           'filename',
-  --           path = 3,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
   {
     -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
     -- command が pop up window で表示される
@@ -669,14 +645,6 @@ return {
         end,
         desc = 'stage git hunk',
         mode = { 'v', 'n' },
-      },
-      {
-        '<leader>gu',
-        function()
-          require('gitsigns').undo_stage_hunk()
-        end,
-        desc = 'undo stage git hunk',
-        mode = { 'n' },
       },
     },
   },
