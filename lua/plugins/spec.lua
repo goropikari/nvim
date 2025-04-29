@@ -113,7 +113,6 @@ return {
     -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VeryLazy',
-    branch = '0.1.x',
     dependencies = {
       'folke/which-key.nvim',
       'nvim-lua/plenary.nvim',
