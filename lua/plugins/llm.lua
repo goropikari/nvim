@@ -22,7 +22,7 @@ return {
         layout = 'vertical',
         width = 0.4,
       },
-      model = 'claude-3.7-sonnet',
+      -- model = 'claude-3.7-sonnet',
     },
     cmd = { 'CopilotChat' },
     keys = {
