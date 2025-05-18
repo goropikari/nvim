@@ -1,19 +1,73 @@
 return {
   {
+    'mason-org/mason.nvim',
+    version = '*',
+    cmd = { 'Mason' },
+    opts = {},
+  },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
+    opts = {
+      ensure_installed = {
+        'clangd',
+        'codelldb',
+        {
+          'delve',
+          condition = function()
+            return vim.fn.executable('go') == 1
+          end,
+        },
+        {
+          'gofumpt',
+          condition = function()
+            return vim.fn.executable('go') == 1
+          end,
+        },
+        {
+          'goimports',
+          condition = function()
+            return vim.fn.executable('go') == 1
+          end,
+        },
+        {
+          'gopls',
+          condition = function()
+            return vim.fn.executable('go') == 1
+          end,
+        },
+        {
+          'pyright',
+          condition = function()
+            return vim.fn.executable('python3') == 1
+          end,
+        },
+        {
+          'ruby_lsp',
+          condition = function()
+            return vim.fn.executable('ruby') == 1
+          end,
+        },
+        'lua_ls',
+        'stylua', -- Used to format Lua code
+        {
+          'markdownlint-cli2',
+          condition = function()
+            return vim.fn.executable('npm') == 1
+          end,
+        },
+        'cbfmt',
+        'typos_lsp',
+      },
+    },
+  },
+  {
+    'hrsh7th/cmp-nvim-lsp',
+  },
+  {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     version = '*',
-    dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
-      'williamboman/mason-lspconfig.nvim',
-
-      -- -- Useful status updates for LSP.
-      -- { 'j-hui/fidget.nvim', opts = {} },
-
-      -- Allows extra capabilities provided by nvim-cmp
-      'hrsh7th/cmp-nvim-lsp',
-    },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -127,144 +181,6 @@ return {
           })
         end,
       })
-
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-      local lsp_servers = {
-        -- html = { filetypes = { 'html', 'twig', 'hbs' } },
-        typos_lsp = {},
-        lua_ls = {
-          -- cmd = {...},
-          -- filetypes = { ...},
-          -- capabilities = {},
-          settings = {
-            -- https://github.com/LuaLS/lua-language-server/blob/cb964c600570e6258d3c0a3f3f424a35a3a4ef64/doc/en-us/config.md
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-        jsonls = {},
-        biome = {},
-      }
-
-      for executable, config in pairs({
-        -- executable = {lsp = config}
-        go = {
-          gopls = {
-            settings = {
-              gopls = {
-                gofumpt = true,
-                codelenses = {
-                  gc_details = false,
-                  generate = true,
-                  regenerate_cgo = true,
-                  run_govulncheck = true,
-                  test = true,
-                  tidy = true,
-                  upgrade_dependency = true,
-                  vendor = true,
-                },
-                hints = {
-                  assignVariableTypes = true,
-                  compositeLiteralFields = true,
-                  compositeLiteralTypes = true,
-                  constantValues = true,
-                  functionTypeParameters = true,
-                  parameterNames = true,
-                  rangeVariableTypes = true,
-                },
-                analyses = {
-                  fieldalignment = false,
-                  nilness = true,
-                  unusedparams = true,
-                  unusedwrite = true,
-                  useany = true,
-                },
-                usePlaceholders = true,
-                completeUnimported = true,
-                staticcheck = true,
-                directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
-                semanticTokens = true,
-              },
-            },
-          },
-        },
-        ruby = {
-          ruby_lsp = {},
-        },
-        clangd = {
-          clangd = {
-            -- https://www.reddit.com/r/neovim/comments/16qwp3d/comment/k261adn/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-            cmd = {
-              'clangd',
-              '--fallback-style=google',
-            },
-          },
-        },
-      }) do
-        if vim.fn.executable(executable) == 1 then
-          for key, val in pairs(config) do
-            lsp_servers[key] = val
-          end
-        end
-      end
-
-      require('mason').setup()
-      require('mason-lspconfig').setup({
-        ensure_installed = {},
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = lsp_servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      })
     end,
-  },
-  {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
-    opts = {
-      ensure_installed = {
-        'clangd',
-        'codelldb',
-        'delve',
-        'gofumpt',
-        'goimports',
-        'gopls',
-        'jsonls',
-        'lua_ls',
-        'ruby_lsp',
-        'stylua', -- Used to format Lua code
-        'markdownlint-cli2',
-        'cbfmt',
-        'typos_lsp',
-      },
-    },
   },
 }

@@ -781,6 +781,7 @@ return {
         lua = { 'stylua' },
         go = { 'goimports', 'gofumpt' },
         markdown = { 'markdownlint-cli2', 'cbfmt' },
+        tex = { 'tex-fmt' },
       },
     },
     config = function(_, opts)
@@ -1014,8 +1015,7 @@ return {
     -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
     event = 'BufEnter',
-    -- dependencies = { 'nvim-lua/plenary.nvim' },
-    -- opts = { signs = false },
+    version = '*',
     config = function()
       require('todo-comments').setup({
         signs = false,
@@ -1028,56 +1028,6 @@ return {
       end
     end,
   },
-  {
-    -- google 検索
-    'voldikss/vim-browser-search',
-    keys = {
-      { '<leader>w', '<Plug>SearchVisual', desc = 'google select word', mode = 'v' },
-      { '<leader>w', '<Plug>SearchNormal', desc = 'google select word', mode = 'n' },
-    },
-  },
-  {
-    'goropikari/jnv.nvim',
-    dev = true,
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
-    opts = {
-      window = {
-        layout = 'vertical',
-      },
-    },
-    keys = {
-      {
-        '<leader>jn',
-        function()
-          require('jnv').jnv_current_buffer()
-        end,
-        desc = 'open jnv',
-      },
-      {
-        '<leader>jn',
-        function()
-          require('jnv').jnv_selection()
-        end,
-        mode = 'v',
-        desc = 'open jnv',
-      },
-      {
-        '<leader>jt',
-        function()
-          require('telescope').extensions.jnv.jnv()
-        end,
-        mode = 'n',
-        desc = 'list jnv buffer',
-      },
-    },
-  },
-  -- {
-  --   -- タイプしたキーを表示する
-  --   'nvzone/showkeys',
-  --   cmd = 'ShowkeysToggle',
-  -- },
   {
     'goropikari/local-devcontainer.nvim',
     dev = true,
@@ -1271,11 +1221,5 @@ return {
         desc = 'hugo server',
       },
     },
-  },
-  {
-    'goropikari/lua-repl.nvim',
-    dev = true,
-    cmd = { 'LuaREPL' },
-    opts = {},
   },
 }
