@@ -1,3 +1,19 @@
 return {
-  cmd = { 'clangd', '--fallback-style=google' },
+  cmd = {
+    'clangd',
+    '--background-index',
+    '--clang-tidy',
+    '--header-insertion=iwyu',
+    '--completion-style=detailed',
+    '--function-arg-placeholders',
+    '--fallback-style=google',
+  },
+  capabilities = {
+    offsetEncoding = { 'utf-16' },
+    textDocument = {
+      semanticTokens = {
+        multilineTokenSupport = true,
+      },
+    },
+  },
 }

@@ -4,7 +4,7 @@ vim.lsp.enable({
   'clangd',
   'gopls',
   'lua_ls',
-  'pyright',
+  'pylsp',
   'ruby_lsp',
   'typos_lsp',
 })

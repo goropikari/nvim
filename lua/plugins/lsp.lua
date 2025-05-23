@@ -10,6 +10,7 @@ return {
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     opts = {
       ensure_installed = {
+        'buf',
         'clangd',
         'codelldb',
         {
@@ -37,7 +38,7 @@ return {
           end,
         },
         {
-          'pyright',
+          'python-lsp-server',
           condition = function()
             return vim.fn.executable('python3') == 1
           end,
