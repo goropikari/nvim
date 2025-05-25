@@ -92,7 +92,7 @@ return {
     },
     lazy = true,
     ft = { 'python' },
-    enabled = vim.fn.executable('python') == 1,
+    enabled = vim.fn.executable('python3') == 1,
     config = function()
       require('dap-python').setup('python')
     end,

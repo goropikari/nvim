@@ -44,12 +44,12 @@ return {
           end,
         },
         {
-          'ruby_lsp',
+          'ruby-lsp',
           condition = function()
             return vim.fn.executable('ruby') == 1
           end,
         },
-        'lua_ls',
+        'lua-language-server',
         'stylua', -- Used to format Lua code
         {
           'markdownlint-cli2',
@@ -58,7 +58,8 @@ return {
           end,
         },
         'cbfmt',
-        'typos_lsp',
+        'dprint',
+        'typos-lsp',
       },
     },
   },

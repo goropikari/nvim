@@ -973,6 +973,13 @@ return {
           end,
           desc = 'clipboard: copy file relative path',
         },
+        {
+          '<leader>yy',
+          function()
+            vim.cmd('%y+')
+          end,
+          desc = 'copy entire file to clipboard',
+        },
 
         -- [[ Noice ]]
         { '<leader>n', desc = 'Noice' },
