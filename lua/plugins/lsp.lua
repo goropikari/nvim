@@ -11,7 +11,7 @@ return {
     opts = {
       ensure_installed = {
         'buf',
-        'clangd',
+        'clangd', -- lsp
         'codelldb',
         {
           'delve',
@@ -32,24 +32,24 @@ return {
           end,
         },
         {
-          'gopls',
+          'gopls', -- lsp
           condition = function()
             return vim.fn.executable('go') == 1
           end,
         },
         {
-          'python-lsp-server',
+          'python-lsp-server', -- lsp
           condition = function()
             return vim.fn.executable('python3') == 1
           end,
         },
         {
-          'ruby-lsp',
+          'ruby-lsp', -- lsp
           condition = function()
             return vim.fn.executable('ruby') == 1
           end,
         },
-        'lua-language-server',
+        'lua-language-server', -- lsp
         'stylua', -- Used to format Lua code
         {
           'markdownlint-cli2',
@@ -59,7 +59,7 @@ return {
         },
         'cbfmt',
         'dprint',
-        'typos-lsp',
+        'typos-lsp', -- lsp
       },
     },
   },

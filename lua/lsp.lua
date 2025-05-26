@@ -1,7 +1,9 @@
 vim.env.PATH = vim.env.PATH .. ':' .. vim.fn.stdpath('data') .. '/mason/bin'
 
 vim.lsp.enable({
+  'buf_ls',
   'clangd',
+  'dprint',
   'gopls',
   'lua_ls',
   'pylsp',
