@@ -55,6 +55,11 @@ return {
     opts = {},
   },
   {
+    'goropikari/openfga.nvim',
+    dev = true,
+    opts = {},
+  },
+  {
     'goropikari/default-new-file.nvim',
     dev = true,
     -- ft = { 'plantuml', 'go', 'cpp' },

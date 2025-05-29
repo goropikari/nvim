@@ -189,13 +189,13 @@ return {
         end,
         desc = 'Search current Buffer',
       },
-      {
-        '<leader>ss',
-        function()
-          require('telescope.builtin').builtin()
-        end,
-        desc = 'Search Select Telescope',
-      },
+      -- {
+      --   '<leader>ss',
+      --   function()
+      --     require('telescope.builtin').builtin()
+      --   end,
+      --   desc = 'Search Select Telescope',
+      -- },
       {
         '<leader>gf',
         function()
@@ -880,6 +880,22 @@ return {
           require('toggleterm.terminal').Terminal:new({ hidden = false }):toggle()
         end,
         desc = 'Add ToggleTerm',
+      },
+      {
+        '<leader>ss',
+        function()
+          vim.cmd([[ToggleTermSendCurrentLine]])
+        end,
+        desc = 'Send current line to ToggleTerm',
+        mode = { 'n' },
+      },
+      {
+        '<leader>ss',
+        function()
+          vim.cmd([[ToggleTermSendVisualSelection]])
+        end,
+        desc = 'Send visual line to ToggleTerm',
+        mode = { 'v' },
       },
     },
     config = function()

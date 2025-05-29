@@ -10,6 +10,7 @@ return {
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     opts = {
       ensure_installed = {
+        'bash-language-server', -- lsp
         'buf',
         'clangd', -- lsp
         'codelldb',
