@@ -56,6 +56,7 @@ return {
   },
   {
     'goropikari/openfga.nvim',
+    ft = { 'fga', 'openfga' },
     dev = true,
     opts = {},
   },

@@ -903,12 +903,6 @@ return {
         open_mapping = [[<c-\>]],
         -- direction = 'float',
         direction = 'horizontal',
-        winbar = {
-          enabled = true,
-          name_formatter = function(term) --  term: Terminal
-            return term.name
-          end,
-        },
       })
       require('telescope').load_extension('termfinder')
     end,
