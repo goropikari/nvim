@@ -49,6 +49,9 @@ return {
   },
   {
     'goropikari/plantuml.nvim',
+    dependencies = {
+      'goropikari/LibDeflate.nvim',
+    },
     dev = true,
     ft = { 'plantuml' },
     cmd = { 'PlantumlPreview', 'PlantumlExport', 'PlantumlStartDocker' },

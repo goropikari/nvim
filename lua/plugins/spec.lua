@@ -430,6 +430,7 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
+    version = '*',
     opts = {
       on_attach = function()
         return true
@@ -624,6 +625,7 @@ return {
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    version = '*',
     event = 'VeryLazy',
     opts = {
       signs = {

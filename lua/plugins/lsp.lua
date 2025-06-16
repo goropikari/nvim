@@ -10,7 +10,12 @@ return {
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     opts = {
       ensure_installed = {
-        'bash-language-server', -- lsp
+        {
+          'bash-language-server', -- lsp
+          condition = function()
+            return vim.fn.executable('npm') == 1
+          end,
+        },
         'buf',
         'clangd', -- lsp
         'codelldb',
