@@ -780,12 +780,12 @@ return {
         }
       end,
       formatters_by_ft = {
-        proto = { 'buf', 'format' },
-        lua = { 'stylua' },
-        go = { 'goimports', 'gofumpt' },
-        markdown = { 'markdownlint-cli2', 'cbfmt' },
-        tex = { 'tex-fmt' },
         cpp = { 'clang-format' },
+        go = { 'goimports', 'gofumpt' },
+        lua = { 'stylua' },
+        markdown = { 'markdownlint-cli2', 'cbfmt' },
+        proto = { 'buf', 'format' },
+        tex = { 'tex-fmt' },
       },
     },
     config = function(_, opts)
@@ -842,74 +842,74 @@ return {
       },
     },
   },
-  {
-    -- Ctrl-t でターミナルを出す
-    'akinsho/toggleterm.nvim',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-      -- toggleterm で開いた terminal を telescope で検索する
-      'tknightz/telescope-termfinder.nvim',
-    },
-    version = '*',
-    cmd = { 'ToggleTerm' },
-    -- opts = {
-    --   open_mapping = [[<c-\>]],
-    --   direction = 'float',
-    --   winbar = {
-    --     enabled = true,
-    --     name_formatter = function(term) --  term: Terminal
-    --       return term.name
-    --     end,
-    --   },
-    -- },
-    keys = {
-      -- {
-      --   '<c-t>',
-      --   function()
-      --     vim.cmd('ToggleTerm')
-      --   end,
-      --   mode = { 'n', 't' },
-      -- },
-      {
-        '<leader>st',
-        function()
-          vim.cmd([[Telescope termfinder find]])
-        end,
-        desc = 'Search ToggleTerm',
-      },
-      {
-        '<leader>Ta',
-        function()
-          require('toggleterm.terminal').Terminal:new({ hidden = false }):toggle()
-        end,
-        desc = 'Add ToggleTerm',
-      },
-      {
-        '<leader>ss',
-        function()
-          vim.cmd([[ToggleTermSendCurrentLine]])
-        end,
-        desc = 'Send current line to ToggleTerm',
-        mode = { 'n' },
-      },
-      {
-        '<leader>ss',
-        function()
-          vim.cmd([[ToggleTermSendVisualSelection]])
-        end,
-        desc = 'Send visual line to ToggleTerm',
-        mode = { 'v' },
-      },
-    },
-    config = function()
-      require('toggleterm').setup({
-        open_mapping = [[<c-\>]],
-        -- direction = 'float',
-        direction = 'horizontal',
-      })
-      require('telescope').load_extension('termfinder')
-    end,
-  },
+  -- {
+  --   -- Ctrl-t でターミナルを出す
+  --   'akinsho/toggleterm.nvim',
+  --   -- dependencies = {
+  --   --   'nvim-telescope/telescope.nvim',
+  --   --   -- toggleterm で開いた terminal を telescope で検索する
+  --   --   'tknightz/telescope-termfinder.nvim',
+  --   -- },
+  --   version = '*',
+  --   cmd = { 'ToggleTerm' },
+  --   opts = {
+  --     open_mapping = [[<c-\>]],
+  --     direction = 'float',
+  --     winbar = {
+  --       enabled = true,
+  --       name_formatter = function(term) --  term: Terminal
+  --         return term.name
+  --       end,
+  --     },
+  --   },
+  --   keys = {
+  --     {
+  --       '<c-t>',
+  --       function()
+  --         vim.cmd('ToggleTerm')
+  --       end,
+  --       mode = { 'n', 't' },
+  --     },
+  --     {
+  --       '<leader>st',
+  --       function()
+  --         vim.cmd([[Telescope termfinder find]])
+  --       end,
+  --       desc = 'Search ToggleTerm',
+  --     },
+  --     {
+  --       '<leader>Ta',
+  --       function()
+  --         require('toggleterm.terminal').Terminal:new({ hidden = false }):toggle()
+  --       end,
+  --       desc = 'Add ToggleTerm',
+  --     },
+  --     {
+  --       '<leader>ss',
+  --       function()
+  --         vim.cmd([[ToggleTermSendCurrentLine]])
+  --       end,
+  --       desc = 'Send current line to ToggleTerm',
+  --       mode = { 'n' },
+  --     },
+  --     {
+  --       '<leader>ss',
+  --       function()
+  --         vim.cmd([[ToggleTermSendVisualSelection]])
+  --       end,
+  --       desc = 'Send visual line to ToggleTerm',
+  --       mode = { 'v' },
+  --     },
+  --   },
+  --   config = function()
+  --     require('toggleterm').setup({
+  --       open_mapping = [[<c-\>]],
+  --       -- direction = 'float',
+  --       direction = 'horizontal',
+  --     })
+  --     require('telescope').load_extension('termfinder')
+  --   end,
+  -- },
   {
     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
@@ -1061,6 +1061,9 @@ return {
     'goropikari/online-judge.nvim',
     dev = true,
     build = 'go install github.com/goropikari/yosupo_judge_client/cmd/yosupocl@latest',
+    condition = function()
+      return vim.fn.executable('go') == 1
+    end,
     opts = {
       oj = {
         tle = 5,
@@ -1209,7 +1212,7 @@ return {
       {
         '<leader>ha',
         function()
-          vim.ui.input('article file name', function(input)
+          vim.ui.input({ prompt = 'article file name' }, function(input)
             vim.system({ 'hugo', 'new', 'content', input }, { text = true }, function(out)
               if out.code ~= 0 then
                 vim.notify(out.stderr, vim.log.levels.ERROR)
@@ -1257,6 +1260,22 @@ return {
           require('termlist').toggle()
         end,
         mode = { 'n', 't' },
+      },
+      {
+        '<leader>ss',
+        function()
+          require('termlist').send_current_line()
+        end,
+        desc = 'Send current line to termlist',
+        mode = { 'n' },
+      },
+      {
+        '<leader>ss',
+        function(opts)
+          require('termlist').send_visual_text(opts)
+        end,
+        desc = 'Send visual text to termlist',
+        mode = { 'v' },
       },
     },
   },
