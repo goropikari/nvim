@@ -780,6 +780,7 @@ return {
         }
       end,
       formatters_by_ft = {
+        proto = { 'buf', 'format' },
         lua = { 'stylua' },
         go = { 'goimports', 'gofumpt' },
         markdown = { 'markdownlint-cli2', 'cbfmt' },
