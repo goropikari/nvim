@@ -861,12 +861,28 @@ return {
       {
         '<c-t>',
         function()
-          if vim.g.loaded_zellij then
+          local terms = require('toggleterm.terminal').get_all()
+          if #terms ~= 0 then
             vim.cmd('ToggleTerm')
-            return
+          else
+            vim.cmd('TermExec cmd="zellij a || zellij"')
+            terms = require('toggleterm.terminal').get_all()
           end
-          vim.g.loaded_zellij = 1
-          vim.cmd('TermExec cmd="zellij a || zellij"')
+          local mode = { 't', 'n' }
+          for _, term in ipairs(terms) do
+            vim.keymap.set(mode, '<C-n>', function()
+              vim.system({ 'zellij', 'action', 'new-tab' }, {}, nil)
+            end, { buffer = term.bufnr, silent = true })
+            vim.keymap.set(mode, '<C-S-n>', function()
+              vim.system({ 'zellij', 'action', 'go-to-next-tab' }, {}, nil)
+            end, { buffer = term.bufnr, silent = true })
+            vim.keymap.set(mode, '<C-S-h>', function()
+              vim.system({ 'zellij', 'action', 'go-to-previous-tab' }, {}, nil)
+            end, { buffer = term.bufnr, silent = true })
+            vim.keymap.set(mode, '<C-x>', function()
+              vim.system({ 'zellij', 'action', 'close-tab' }, {}, nil)
+            end, { buffer = term.bufnr, silent = true })
+          end
         end,
         mode = { 'n', 't' },
       },
