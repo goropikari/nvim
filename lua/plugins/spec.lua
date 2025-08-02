@@ -842,74 +842,52 @@ return {
       },
     },
   },
-  -- {
-  --   -- Ctrl-t でターミナルを出す
-  --   'akinsho/toggleterm.nvim',
-  --   -- dependencies = {
-  --   --   'nvim-telescope/telescope.nvim',
-  --   --   -- toggleterm で開いた terminal を telescope で検索する
-  --   --   'tknightz/telescope-termfinder.nvim',
-  --   -- },
-  --   version = '*',
-  --   cmd = { 'ToggleTerm' },
-  --   opts = {
-  --     open_mapping = [[<c-\>]],
-  --     direction = 'float',
-  --     winbar = {
-  --       enabled = true,
-  --       name_formatter = function(term) --  term: Terminal
-  --         return term.name
-  --       end,
-  --     },
-  --   },
-  --   keys = {
-  --     {
-  --       '<c-t>',
-  --       function()
-  --         vim.cmd('ToggleTerm')
-  --       end,
-  --       mode = { 'n', 't' },
-  --     },
-  --     {
-  --       '<leader>st',
-  --       function()
-  --         vim.cmd([[Telescope termfinder find]])
-  --       end,
-  --       desc = 'Search ToggleTerm',
-  --     },
-  --     {
-  --       '<leader>Ta',
-  --       function()
-  --         require('toggleterm.terminal').Terminal:new({ hidden = false }):toggle()
-  --       end,
-  --       desc = 'Add ToggleTerm',
-  --     },
-  --     {
-  --       '<leader>ss',
-  --       function()
-  --         vim.cmd([[ToggleTermSendCurrentLine]])
-  --       end,
-  --       desc = 'Send current line to ToggleTerm',
-  --       mode = { 'n' },
-  --     },
-  --     {
-  --       '<leader>ss',
-  --       function()
-  --         vim.cmd([[ToggleTermSendVisualSelection]])
-  --       end,
-  --       desc = 'Send visual line to ToggleTerm',
-  --       mode = { 'v' },
-  --     },
-  --   },
-  --   config = function()
-  --     require('toggleterm').setup({
-  --       open_mapping = [[<c-\>]],
-  --       -- direction = 'float',
-  --       direction = 'horizontal',
-  --     })
-  --     require('telescope').load_extension('termfinder')
-  --   end,
-  -- },
+  {
+    -- Ctrl-t でターミナルを出す
+    'akinsho/toggleterm.nvim',
+    -- dependencies = {
+    --   'nvim-telescope/telescope.nvim',
+    --   -- toggleterm で開いた terminal を telescope で検索する
+    --   'tknightz/telescope-termfinder.nvim',
+    -- },
+    version = '*',
+    cmd = { 'ToggleTerm' },
+    opts = {
+      size = math.floor(vim.o.lines * 0.38),
+      open_mapping = [[<c-\>]],
+      direction = 'horizontal',
+    },
+    keys = {
+      {
+        '<c-t>',
+        function()
+          if vim.g.loaded_zellij then
+            vim.cmd('ToggleTerm')
+            return
+          end
+          vim.g.loaded_zellij = 1
+          vim.cmd('TermExec cmd="zellij a || zellij"')
+        end,
+        mode = { 'n', 't' },
+      },
+      {
+        '<leader>ss',
+        function()
+          vim.cmd([[ToggleTermSendCurrentLine]])
+        end,
+        desc = 'Send current line to ToggleTerm',
+        mode = { 'n' },
+      },
+      {
+        '<leader>ss',
+        function()
+          vim.cmd([[ToggleTermSendVisualSelection]])
+        end,
+        desc = 'Send visual line to ToggleTerm',
+        mode = { 'v' },
+      },
+    },
+  },
   {
     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
@@ -1246,37 +1224,37 @@ return {
       },
     },
   },
-  {
-    'goropikari/termlist.nvim',
-    dependencies = {
-      'akinsho/toggleterm.nvim',
-    },
-    dev = true,
-    opts = {},
-    keys = {
-      {
-        '<c-t>',
-        function()
-          require('termlist').toggle()
-        end,
-        mode = { 'n', 't' },
-      },
-      {
-        '<leader>ss',
-        function()
-          require('termlist').send_current_line()
-        end,
-        desc = 'Send current line to termlist',
-        mode = { 'n' },
-      },
-      {
-        '<leader>ss',
-        function(opts)
-          require('termlist').send_visual_text(opts)
-        end,
-        desc = 'Send visual text to termlist',
-        mode = { 'v' },
-      },
-    },
-  },
+  -- {
+  --   'goropikari/termlist.nvim',
+  --   dependencies = {
+  --     'akinsho/toggleterm.nvim',
+  --   },
+  --   dev = true,
+  --   opts = {},
+  --   keys = {
+  --     {
+  --       '<c-t>',
+  --       function()
+  --         require('termlist').toggle()
+  --       end,
+  --       mode = { 'n', 't' },
+  --     },
+  --     {
+  --       '<leader>ss',
+  --       function()
+  --         require('termlist').send_current_line()
+  --       end,
+  --       desc = 'Send current line to termlist',
+  --       mode = { 'n' },
+  --     },
+  --     {
+  --       '<leader>ss',
+  --       function(opts)
+  --         require('termlist').send_visual_text(opts)
+  --       end,
+  --       desc = 'Send visual text to termlist',
+  --       mode = { 'v' },
+  --     },
+  --   },
+  -- },
 }
