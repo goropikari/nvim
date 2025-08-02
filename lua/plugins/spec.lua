@@ -266,61 +266,61 @@ return {
       },
     },
   },
-  -- {
-  --   -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
-  --   -- command が pop up window で表示される
-  --   'folke/noice.nvim',
-  --   event = 'VeryLazy',
-  --   opts = {
-  --     lsp = {
-  --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-  --       override = {
-  --         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-  --         ['vim.lsp.util.stylize_markdown'] = true,
-  --         ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
-  --       },
-  --     },
-  --     -- you can enable a preset for easier configuration
-  --     presets = {
-  --       bottom_search = false, -- use a classic bottom cmdline for search
-  --       command_palette = true, -- position the cmdline and popupmenu together
-  --       long_message_to_split = false, -- long messages will be sent to a split
-  --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
-  --       lsp_doc_border = false, -- add a border to hover docs and signature help
-  --     },
-  --   },
-  --   dependencies = {
-  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-  --     'MunifTanjim/nui.nvim',
-  --     -- OPTIONAL:
-  --     --   `nvim-notify` is only needed, if you want to use the notification view.
-  --     --   If not available, we use `mini` as the fallback
-  --     -- "rcarriga/nvim-notify",
-  --   },
-  --   keys = {
-  --     {
-  --       '<leader>nh',
-  --       function()
-  --         require('noice').cmd('history')
-  --       end,
-  --       desc = 'Noice History',
-  --     },
-  --     {
-  --       '<leader>ne',
-  --       function()
-  --         require('noice').cmd('error')
-  --       end,
-  --       desc = 'Noice Error',
-  --     },
-  --     {
-  --       '<leader>nl',
-  --       function()
-  --         require('noice').cmd('last')
-  --       end,
-  --       desc = 'Noice Last',
-  --     },
-  --   },
-  -- },
+  {
+    -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+    -- command が pop up window で表示される
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    opts = {
+      lsp = {
+        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        override = {
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+          ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+        },
+      },
+      -- you can enable a preset for easier configuration
+      presets = {
+        bottom_search = false, -- use a classic bottom cmdline for search
+        command_palette = true, -- position the cmdline and popupmenu together
+        long_message_to_split = false, -- long messages will be sent to a split
+        inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false, -- add a border to hover docs and signature help
+      },
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      'MunifTanjim/nui.nvim',
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      -- "rcarriga/nvim-notify",
+    },
+    keys = {
+      {
+        '<leader>nh',
+        function()
+          require('noice').cmd('history')
+        end,
+        desc = 'Noice History',
+      },
+      {
+        '<leader>ne',
+        function()
+          require('noice').cmd('error')
+        end,
+        desc = 'Noice Error',
+      },
+      {
+        '<leader>nl',
+        function()
+          require('noice').cmd('last')
+        end,
+        desc = 'Noice Last',
+      },
+    },
+  },
   {
     -- buffer を tab で表示する
     'romgrk/barbar.nvim',
@@ -337,10 +337,10 @@ return {
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
     keys = {
-      { '<leader>bn', '<Cmd>BufferNext<CR>', desc = 'Buffer Next' },
-      { '<leader>bN', '<Cmd>BufferPrevious<CR>', desc = 'Buffer Previous' },
+      -- { '<leader>bn', '<Cmd>BufferNext<CR>', desc = 'Buffer Next' },
+      -- { '<leader>bN', '<Cmd>BufferPrevious<CR>', desc = 'Buffer Previous' },
       { '<leader>bca', '<Cmd>BufferCloseAllButCurrent<CR><C-w><C-o><CR>', desc = 'close all buffer but current' },
-      { '<leader>bcc', '<Cmd>BufferClose<CR><Cmd>q<CR>', desc = 'close buffer' },
+      -- { '<leader>bcc', '<Cmd>BufferClose<CR><Cmd>q<CR>', desc = 'close buffer' },
     },
   },
   {
@@ -845,12 +845,6 @@ return {
   {
     -- Ctrl-t でターミナルを出す
     'akinsho/toggleterm.nvim',
-    -- dependencies = {
-    --   'nvim-telescope/telescope.nvim',
-    --   -- toggleterm で開いた terminal を telescope で検索する
-    --   'tknightz/telescope-termfinder.nvim',
-    -- },
-    version = '*',
     cmd = { 'ToggleTerm' },
     opts = {
       size = math.floor(vim.o.lines * 0.38),
@@ -861,28 +855,7 @@ return {
       {
         '<c-t>',
         function()
-          local terms = require('toggleterm.terminal').get_all()
-          if #terms ~= 0 then
-            vim.cmd('ToggleTerm')
-          else
-            vim.cmd('TermExec cmd="zellij a || zellij"')
-            terms = require('toggleterm.terminal').get_all()
-          end
-          local mode = { 't', 'n' }
-          for _, term in ipairs(terms) do
-            vim.keymap.set(mode, '<C-n>', function()
-              vim.system({ 'zellij', 'action', 'new-tab' }, {}, nil)
-            end, { buffer = term.bufnr, silent = true })
-            vim.keymap.set(mode, '<C-S-n>', function()
-              vim.system({ 'zellij', 'action', 'go-to-next-tab' }, {}, nil)
-            end, { buffer = term.bufnr, silent = true })
-            vim.keymap.set(mode, '<C-S-h>', function()
-              vim.system({ 'zellij', 'action', 'go-to-previous-tab' }, {}, nil)
-            end, { buffer = term.bufnr, silent = true })
-            vim.keymap.set(mode, '<C-x>', function()
-              vim.system({ 'zellij', 'action', 'close-tab' }, {}, nil)
-            end, { buffer = term.bufnr, silent = true })
-          end
+          vim.cmd('ToggleTerm')
         end,
         mode = { 'n', 't' },
       },
@@ -1240,37 +1213,4 @@ return {
       },
     },
   },
-  -- {
-  --   'goropikari/termlist.nvim',
-  --   dependencies = {
-  --     'akinsho/toggleterm.nvim',
-  --   },
-  --   dev = true,
-  --   opts = {},
-  --   keys = {
-  --     {
-  --       '<c-t>',
-  --       function()
-  --         require('termlist').toggle()
-  --       end,
-  --       mode = { 'n', 't' },
-  --     },
-  --     {
-  --       '<leader>ss',
-  --       function()
-  --         require('termlist').send_current_line()
-  --       end,
-  --       desc = 'Send current line to termlist',
-  --       mode = { 'n' },
-  --     },
-  --     {
-  --       '<leader>ss',
-  --       function(opts)
-  --         require('termlist').send_visual_text(opts)
-  --       end,
-  --       desc = 'Send visual text to termlist',
-  --       mode = { 'v' },
-  --     },
-  --   },
-  -- },
 }
