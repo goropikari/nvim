@@ -77,13 +77,6 @@ return {
     ft = { 'go' },
     enabled = vim.fn.executable('go') == 1,
     opts = {},
-    build = function()
-      vim.system({
-        'go',
-        'install',
-        'github.com/go-delve/delve/cmd/dlv@latest',
-      })
-    end,
   },
   {
     'mfussenegger/nvim-dap-python',
@@ -230,7 +223,7 @@ return {
 
         -- your neotest config here
         adapters = adapters,
-        log_level = 3,
+        log_level = vim.log.levels.WARN,
       })
     end,
   },

@@ -850,6 +850,12 @@ return {
       size = math.floor(vim.o.lines * 0.38),
       open_mapping = [[<c-\>]],
       direction = 'horizontal',
+      -- winbar = {
+      --   enabled = true,
+      --   name_formatter = function(term) --  term: Terminal
+      --     return term.name
+      --   end,
+      -- },
     },
     keys = {
       {
@@ -1212,5 +1218,11 @@ return {
         desc = 'hugo server',
       },
     },
+  },
+  {
+    'willothy/flatten.nvim',
+    version = 'v0.5.1',
+    opts = {},
+    lazy = false,
   },
 }
