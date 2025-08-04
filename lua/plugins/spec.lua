@@ -842,47 +842,47 @@ return {
       },
     },
   },
-  {
-    -- Ctrl-t でターミナルを出す
-    'akinsho/toggleterm.nvim',
-    cmd = { 'ToggleTerm' },
-    opts = {
-      size = math.floor(vim.o.lines * 0.38),
-      open_mapping = [[<c-\>]],
-      direction = 'horizontal',
-      -- winbar = {
-      --   enabled = true,
-      --   name_formatter = function(term) --  term: Terminal
-      --     return term.name
-      --   end,
-      -- },
-    },
-    keys = {
-      {
-        '<c-t>',
-        function()
-          vim.cmd('ToggleTerm')
-        end,
-        mode = { 'n', 't' },
-      },
-      {
-        '<leader>ss',
-        function()
-          vim.cmd([[ToggleTermSendCurrentLine]])
-        end,
-        desc = 'Send current line to ToggleTerm',
-        mode = { 'n' },
-      },
-      {
-        '<leader>ss',
-        function()
-          vim.cmd([[ToggleTermSendVisualSelection]])
-        end,
-        desc = 'Send visual line to ToggleTerm',
-        mode = { 'v' },
-      },
-    },
-  },
+  -- {
+  --   -- Ctrl-t でターミナルを出す
+  --   'akinsho/toggleterm.nvim',
+  --   cmd = { 'ToggleTerm' },
+  --   opts = {
+  --     size = math.floor(vim.o.lines * 0.38),
+  --     open_mapping = [[<c-\>]],
+  --     direction = 'horizontal',
+  --     -- winbar = {
+  --     --   enabled = true,
+  --     --   name_formatter = function(term) --  term: Terminal
+  --     --     return term.name
+  --     --   end,
+  --     -- },
+  --   },
+  --   keys = {
+  --     {
+  --       '<c-t>',
+  --       function()
+  --         vim.cmd('ToggleTerm')
+  --       end,
+  --       mode = { 'n', 't' },
+  --     },
+  --     {
+  --       '<leader>ss',
+  --       function()
+  --         vim.cmd([[ToggleTermSendCurrentLine]])
+  --       end,
+  --       desc = 'Send current line to ToggleTerm',
+  --       mode = { 'n' },
+  --     },
+  --     {
+  --       '<leader>ss',
+  --       function()
+  --         vim.cmd([[ToggleTermSendVisualSelection]])
+  --       end,
+  --       desc = 'Send visual line to ToggleTerm',
+  --       mode = { 'v' },
+  --     },
+  --   },
+  -- },
   {
     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
@@ -1224,5 +1224,13 @@ return {
     version = 'v0.5.1',
     opts = {},
     lazy = false,
+  },
+  {
+    'goropikari/tabterm.nvim',
+    dependencies = {
+      'akinsho/toggleterm.nvim',
+    },
+    dev = true,
+    opts = {},
   },
 }
