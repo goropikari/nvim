@@ -1219,12 +1219,12 @@ return {
       },
     },
   },
-  {
-    'willothy/flatten.nvim',
-    version = 'v0.5.1',
-    opts = {},
-    lazy = false,
-  },
+  -- {
+  --   'willothy/flatten.nvim',
+  --   version = 'v0.5.1',
+  --   opts = {},
+  --   lazy = false,
+  -- },
   {
     'goropikari/tabterm.nvim',
     dependencies = {

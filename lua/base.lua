@@ -12,6 +12,16 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 
+-- vim.o.statusline = '%f %m %=%r%{%v:lua.require("nvim-web-devicons").get_icon_by_filetype(&filetype)%} %y bufnr=%n'
+-- %f: relative file path
+-- %m: modified flag
+-- %=: separates left and right sections
+-- %r: readonly flag
+-- %y: file type
+-- %n: buffer number
+-- %P: percentage through the file
+vim.o.statusline = '%f %m %=%r %y bufnr=%n %P'
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'go' },
   callback = function()
