@@ -56,6 +56,7 @@ return {
           end,
         },
         'lua-language-server', -- lsp
+        'sleek', -- sql
         'stylua', -- Used to format Lua code
         {
           'markdownlint-cli2',

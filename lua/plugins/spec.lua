@@ -1027,7 +1027,7 @@ return {
     dev = true,
     build = 'make setup',
     enabled = vim.fn.executable('devcontainer') == 1 and vim.fn.isdirectory('.devcontainer'),
-    cmd = { 'DevContainerUp', 'DevContainerEditOverrideConfig' },
+    cmd = { 'DevContainerAddConfiguration', 'DevContainerEditOverrideConfig', 'DevContainerUp' },
     opts = {},
   },
   {
