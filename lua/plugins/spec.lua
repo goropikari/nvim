@@ -1032,11 +1032,9 @@ return {
   },
   {
     'goropikari/online-judge.nvim',
+    enabled = vim.fn.executable('go') == 1,
     dev = true,
     build = 'go install github.com/goropikari/yosupo_judge_client/cmd/yosupocl@latest',
-    condition = function()
-      return vim.fn.executable('go') == 1
-    end,
     opts = {
       oj = {
         tle = 5,
@@ -1232,5 +1230,24 @@ return {
     },
     dev = true,
     opts = {},
+  },
+  {
+    'goropikari/telescope-copilotchat-history.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+      'CopilotC-Nvim/CopilotChat.nvim',
+      'nvim-lua/plenary.nvim',
+    },
+    cmd = { 'CopilotChat', 'CopilotChatLoad' },
+    keys = {
+      {
+        '<leader>gch',
+        function()
+          vim.cmd('Telescope copilotchat_history')
+        end,
+        desc = 'Copilot Chat History',
+      },
+    },
+    dev = true,
   },
 }
