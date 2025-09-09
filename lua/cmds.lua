@@ -87,27 +87,27 @@ api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-if vim.uv.os_uname().sysname == 'Linux' and vim.fn.executable('fcitx5-remote') then
-  -- ime off = 1
-  -- mozc = 2
-  vim.g.last_ime_state = 0
-
-  -- Insertモードを抜けるときに現在のIME状態を記録
-  vim.api.nvim_create_autocmd('InsertLeave', {
-    pattern = '*',
-    callback = function()
-      local result = tonumber(vim.fn.system('fcitx5-remote'))
-      vim.g.last_ime_state = result or 1
-      vim.fn.system('fcitx5-remote -c')
-    end,
-  })
-
-  vim.api.nvim_create_autocmd('InsertEnter', {
-    pattern = '*',
-    callback = function()
-      if vim.g.last_ime_state == 2 then
-        vim.fn.system('fcitx5-remote -o') -- IME をオンに戻す
-      end
-    end,
-  })
-end
+-- if vim.uv.os_uname().sysname == 'Linux' and vim.fn.executable('fcitx5-remote') then
+--   -- ime off = 1
+--   -- mozc = 2
+--   vim.g.last_ime_state = 0
+--
+--   -- Insertモードを抜けるときに現在のIME状態を記録
+--   vim.api.nvim_create_autocmd('InsertLeave', {
+--     pattern = '*',
+--     callback = function()
+--       local result = tonumber(vim.fn.system('fcitx5-remote'))
+--       vim.g.last_ime_state = result or 1
+--       vim.fn.system('fcitx5-remote -c')
+--     end,
+--   })
+--
+--   vim.api.nvim_create_autocmd('InsertEnter', {
+--     pattern = '*',
+--     callback = function()
+--       if vim.g.last_ime_state == 2 then
+--         vim.fn.system('fcitx5-remote -o') -- IME をオンに戻す
+--       end
+--     end,
+--   })
+-- end

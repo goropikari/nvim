@@ -121,3 +121,11 @@ vim.keymap.set('n', 's', '<NOP>')
 
 -- command history 表示を無効化
 vim.keymap.set('n', 'q:', '<NOP>')
+
+-- Dockerfile から始まるファイルの filetype を dockerfile に設定
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = 'Dockerfile*',
+  callback = function()
+    vim.bo.filetype = 'dockerfile'
+  end,
+})
