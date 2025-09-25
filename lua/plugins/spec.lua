@@ -1253,6 +1253,7 @@ return {
   {
     'goropikari/pict.nvim',
     dev = true,
+    ft = { 'pict' },
     opts = {},
     keys = {
       {
