@@ -1250,4 +1250,18 @@ return {
     },
     dev = true,
   },
+  {
+    'goropikari/pict.nvim',
+    dev = true,
+    opts = {},
+    keys = {
+      {
+        '<leader>tp',
+        function()
+          require('pict').markdown()
+        end,
+        desc = 'pict',
+      },
+    },
+  },
 }

@@ -27,6 +27,7 @@ return {
         unusedparams = true,
         unusedwrite = true,
         useany = true,
+        ST1000 = false,
       },
       usePlaceholders = true,
       completeUnimported = true,
