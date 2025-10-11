@@ -136,7 +136,8 @@ return {
       'nvim-treesitter/nvim-treesitter',
       {
         'fredrikaverpil/neotest-golang',
-        version = '*',
+        -- version = '*',
+        version = 'v1.15.1', -- v2 系に上げる場合は nvim-treesitter の参照を main branch にする必要がある
         enabled = vim.fn.executable('go') == 1,
       },
     },
