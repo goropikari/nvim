@@ -958,6 +958,7 @@ return {
   {
     'goropikari/online-judge.nvim',
     enabled = vim.fn.executable('go') == 1,
+    cond = os.getenv('ENABLE_ONLINE_JUDGE') == '1',
     dev = true,
     build = 'go install github.com/goropikari/yosupo_judge_client/cmd/yosupocl@latest',
     opts = {
