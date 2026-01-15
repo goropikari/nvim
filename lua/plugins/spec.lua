@@ -1191,4 +1191,7 @@ return {
       },
     },
   },
+  {
+    'direnv/direnv.vim',
+  },
 }

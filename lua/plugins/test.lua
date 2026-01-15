@@ -145,7 +145,8 @@ return {
       {
         '<leader>ta',
         function()
-          require('neotest').run.run(vim.fn.expand('%'))
+          ---@diagnostic disable-next-line
+          require('neotest').run.run({})
           require('neotest').summary.open()
         end,
         desc = 'Test All',
@@ -168,10 +169,8 @@ return {
       {
         '<leader>ts',
         function()
-          local exrc = vim.g.exrc
-          local env = (exrc and exrc.neotest and exrc.neotest.env) or {}
           ---@diagnostic disable-next-line
-          require('neotest').run.run({ env = env })
+          require('neotest').run.run({})
           require('neotest').summary.open()
         end,
         desc = 'Test Single',
@@ -188,13 +187,26 @@ return {
         },
       }, neotest_ns)
 
+      local git_dir_path = vim.fs.find('.git', {
+        path = vim.fn.expand('%:p:h'),
+        upward = true,
+        type = 'directory',
+      })
+
+      local root_dirname = vim.fn.expand('%:p:h:t')
+      if git_dir_path and #git_dir_path > 0 then
+        root_dirname = vim.fn.fnamemodify(git_dir_path[1], ':h:t')
+      end
+
       local langs = {
         {
           executable = 'go',
           plugin_name = 'neotest-golang',
           opts = {
+            runner = 'gotestsum',
             go_test_args = { '--shuffle=on' },
             testify_enabled = true,
+            env = { DB_NAME = root_dirname .. '_test' },
           },
         },
       }

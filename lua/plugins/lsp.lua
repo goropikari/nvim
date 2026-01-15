@@ -26,6 +26,12 @@ return {
           end,
         },
         {
+          'gotestsum',
+          condition = function()
+            return vim.fn.executable('go') == 1
+          end,
+        },
+        {
           'gofumpt',
           condition = function()
             return vim.fn.executable('go') == 1
