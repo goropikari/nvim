@@ -146,7 +146,7 @@ return {
         '<leader>ta',
         function()
           ---@diagnostic disable-next-line
-          require('neotest').run.run({})
+          require('neotest').run.run({ vim.fn.expand('%') })
           require('neotest').summary.open()
         end,
         desc = 'Test All',
