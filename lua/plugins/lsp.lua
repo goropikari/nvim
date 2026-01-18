@@ -52,7 +52,7 @@ return {
         {
           'python-lsp-server', -- lsp
           condition = function()
-            return vim.fn.executable('python3') == 1
+            return vim.fn.executable('python3-venv') == 1 or vim.fn.executable('python-venv') == 1
           end,
         },
         {
@@ -62,7 +62,12 @@ return {
           end,
         },
         'lua-language-server', -- lsp
-        'sleek', -- sql
+        {
+          'sleek', -- sql
+          condition = function()
+            return vim.fn.executable('cargo') == 1
+          end,
+        },
         'stylua', -- Used to format Lua code
         {
           'markdownlint-cli2',

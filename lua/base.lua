@@ -3,6 +3,7 @@
 -- NOTE: You can change these options as you wish!
 
 vim.env.GIT_EDITOR = 'nano'
+vim.env.LANG = 'en_US.UTF-8'
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
