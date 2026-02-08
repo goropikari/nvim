@@ -1,30 +1,5 @@
 return {
   {
-    -- colorscheme
-    'ellisonleao/gruvbox.nvim',
-    lazy = true,
-    opts = {
-      italic = {
-        strings = false,
-        emphasis = false,
-        comments = false,
-        operators = false,
-        folds = true,
-      },
-      undercurl = true,
-      underline = true,
-      bold = false,
-      overrides = {
-        LineNr = { fg = '#C0D4C0' }, -- line number の色を変える
-        Comment = { fg = '#50B010' }, -- comment の色を変える
-      },
-    },
-    config = function(plugin, opts)
-      require('gruvbox').setup(opts)
-      vim.cmd('colorscheme gruvbox')
-    end,
-  },
-  {
     'neanias/everforest-nvim',
     event = 'VeryLazy',
     config = function()
@@ -89,7 +64,7 @@ return {
         },
       },
       window = {
-        position = 'float',
+        position = 'left',
         mappings = {
           ['<space>'] = 'none',
           ['Y'] = function(state)
@@ -131,20 +106,7 @@ return {
     },
     config = function()
       -- local actions = require('telescope.actions')
-      require('telescope').setup({
-        -- defaults = {
-        --   mappings = {
-        --     i = {
-        --       ['<c-CR>'] = actions.select_default,
-        --       ['<CR>'] = actions.nop,
-        --     },
-        --     n = {
-        --       ['<c-CR>'] = actions.select_default,
-        --       ['<CR>'] = actions.nop,
-        --     },
-        --   },
-        -- },
-      })
+      require('telescope').setup({})
 
       -- Enable telescope fzf native, if installed
       pcall(require('telescope').load_extension, 'fzf')
@@ -189,47 +151,12 @@ return {
         end,
         desc = 'Search current Buffer',
       },
-      -- {
-      --   '<leader>ss',
-      --   function()
-      --     require('telescope.builtin').builtin()
-      --   end,
-      --   desc = 'Search Select Telescope',
-      -- },
-      {
-        '<leader>gf',
-        function()
-          require('telescope.builtin').git_files()
-        end,
-        desc = 'Search Git Files',
-      },
-      {
-        '<leader>gs',
-        function()
-          require('telescope.builtin').git_status()
-        end,
-        desc = 'Search Git Status',
-      },
       {
         '<leader>sf',
         function()
           require('telescope.builtin').find_files()
         end,
         desc = 'Search Files',
-      },
-      {
-        '<leader>sh',
-        function()
-          require('telescope.builtin').help_tags()
-        end,
-        desc = 'Search Help',
-      },
-      {
-        '<leader>sw',
-        function()
-          require('telescope.builtin').grep_string()
-        end,
-        desc = 'Search current Word',
       },
       {
         '<leader>sg',
@@ -245,13 +172,6 @@ return {
         end,
         desc = 'Lists the previous pickers',
       },
-      -- {
-      --   '<leader>sd',
-      --   function()
-      --     require('telescope.builtin').diagnostics()
-      --   end,
-      --   desc = 'Search Diagnostics',
-      -- },
       {
         -- zenn or hugo article list
         '<leader>zz',
@@ -362,31 +282,6 @@ return {
       end,
     },
   },
-  -- {
-  --   -- indent を見やすくする
-  --   'shellRaining/hlchunk.nvim',
-  --   event = { 'BufReadPre', 'BufNewFile' },
-  --   opts = {
-  --     chunk = {
-  --       enable = true,
-  --     },
-  --     indent = {
-  --       enable = true,
-  --       chars = {
-  --         '│',
-  --       },
-  --       style = {
-  --         '#C06C75',
-  --         '#C5C07B',
-  --         '#61AAEF',
-  --         '#C19A66',
-  --         '#68C379',
-  --         '#A678D0',
-  --         '#16B6C0',
-  --       },
-  --     },
-  --   },
-  -- },
   {
     -- indent を見やすくする
     'lukas-reineke/indent-blankline.nvim',
@@ -531,7 +426,7 @@ return {
     version = '*',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
-      -- 'sindrets/diffview.nvim', -- optional - Diff integration
+      'sindrets/diffview.nvim', -- optional - Diff integration
 
       -- Only one of these is needed.
       'nvim-telescope/telescope.nvim', -- optional
@@ -736,7 +631,10 @@ return {
     end,
   },
   {
+    -- コードのアウトラインを表示する
+    -- NOTE: 関数定義や markdown の見出しなどを一覧表示する
     'stevearc/aerial.nvim',
+    lazy = true,
     opts = {},
     -- Optional dependencies
     dependencies = {
@@ -759,7 +657,7 @@ return {
     dev = true,
     keys = {
       {
-        '<leader>CC',
+        '<leader>sw',
         function()
           require('window-selector').select_window()
         end,
@@ -767,47 +665,6 @@ return {
       },
     },
   },
-  -- {
-  --   -- Ctrl-t でターミナルを出す
-  --   'akinsho/toggleterm.nvim',
-  --   cmd = { 'ToggleTerm' },
-  --   opts = {
-  --     size = math.floor(vim.o.lines * 0.38),
-  --     open_mapping = [[<c-\>]],
-  --     direction = 'horizontal',
-  --     -- winbar = {
-  --     --   enabled = true,
-  --     --   name_formatter = function(term) --  term: Terminal
-  --     --     return term.name
-  --     --   end,
-  --     -- },
-  --   },
-  --   keys = {
-  --     {
-  --       '<c-t>',
-  --       function()
-  --         vim.cmd('ToggleTerm')
-  --       end,
-  --       mode = { 'n', 't' },
-  --     },
-  --     {
-  --       '<leader>ss',
-  --       function()
-  --         vim.cmd([[ToggleTermSendCurrentLine]])
-  --       end,
-  --       desc = 'Send current line to ToggleTerm',
-  --       mode = { 'n' },
-  --     },
-  --     {
-  --       '<leader>ss',
-  --       function()
-  --         vim.cmd([[ToggleTermSendVisualSelection]])
-  --       end,
-  --       desc = 'Send visual line to ToggleTerm',
-  --       mode = { 'v' },
-  --     },
-  --   },
-  -- },
   {
     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
@@ -946,14 +803,6 @@ return {
         end
       end
     end,
-  },
-  {
-    'goropikari/local-devcontainer.nvim',
-    dev = true,
-    build = 'make setup',
-    enabled = vim.fn.executable('devcontainer') == 1 and vim.fn.isdirectory('.devcontainer'),
-    cmd = { 'DevContainerAddConfiguration', 'DevContainerEditOverrideConfig', 'DevContainerUp' },
-    opts = {},
   },
   {
     'goropikari/online-judge.nvim',
@@ -1105,43 +954,6 @@ return {
         build = vim.fn.executable('go') == 1 and 'make build' or 'make setup',
       },
     },
-    keys = {
-      {
-        '<leader>ha',
-        function()
-          vim.ui.input({ prompt = 'article file name' }, function(input)
-            vim.system({ 'hugo', 'new', 'content', input }, { text = true }, function(out)
-              if out.code ~= 0 then
-                vim.notify(out.stderr, vim.log.levels.ERROR)
-              end
-            end)
-          end)
-        end,
-        desc = 'add hugo content',
-      },
-      {
-        '<leader>hs',
-        function()
-          vim.system({ 'hugo', 'server', '-D' }, {
-            text = true,
-            stdout = function(err, out)
-              if err then
-                vim.notify(err, vim.log.levels.ERROR)
-                return
-              end
-
-              local hugo_open = vim.g.hugo_open
-              local url = out:match('http://[%a%p%d]*')
-              if url and not hugo_open then
-                vim.ui.open(url)
-                vim.g.hugo_open = true
-              end
-            end,
-          })
-        end,
-        desc = 'hugo server',
-      },
-    },
   },
   -- {
   --   'willothy/flatten.nvim',
@@ -1156,25 +968,6 @@ return {
     },
     dev = true,
     opts = {},
-  },
-  {
-    'goropikari/telescope-copilotchat-history.nvim',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-      'CopilotC-Nvim/CopilotChat.nvim',
-      'nvim-lua/plenary.nvim',
-    },
-    cmd = { 'CopilotChat', 'CopilotChatLoad' },
-    keys = {
-      {
-        '<leader>gch',
-        function()
-          vim.cmd('Telescope copilotchat_history')
-        end,
-        desc = 'Copilot Chat History',
-      },
-    },
-    dev = true,
   },
   {
     'goropikari/pict.nvim',

@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 return {
   {
     'github/copilot.vim',
@@ -22,7 +20,6 @@ return {
         layout = 'vertical',
         width = 0.4,
       },
-      -- model = 'claude-3.7-sonnet',
     },
     cmd = { 'CopilotChat' },
     keys = {
@@ -32,17 +29,6 @@ return {
           vim.cmd('CopilotChat')
         end,
         desc = 'CopilotChat - Quick chat',
-      },
-      {
-        '<leader>gcs',
-        function()
-          local input = vim.fn.join(utils.get_visual_lines(), '\n')
-          if input ~= '' then
-            require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
-          end
-        end,
-        desc = 'CopilotChat - Send visual lines',
-        mode = 'v',
       },
     },
   },

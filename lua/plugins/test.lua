@@ -1,7 +1,8 @@
 return {
   {
     'mfussenegger/nvim-dap',
-    version = '*',
+    -- version = '*',
+    commit = 'e47878dcf1ccc30136b30d19ab19fe76946d61cd',
     dependencies = {
       -- Creates a beautiful debugger UI
       'rcarriga/nvim-dap-ui',

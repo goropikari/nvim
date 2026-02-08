@@ -16,9 +16,16 @@ return {
             return vim.fn.executable('npm') == 1
           end,
         },
-        'buf',
-        'clangd', -- lsp
-        'codelldb',
+        {
+          'buf', --lsp, format
+        },
+        {
+          'clangd', -- lsp
+        },
+        {
+          'codelldb',
+          version = '*',
+        },
         {
           'delve',
           condition = function()
@@ -61,23 +68,42 @@ return {
             return vim.fn.executable('ruby') == 1
           end,
         },
-        'lua-language-server', -- lsp
+        {
+          'lua-language-server', -- lsp
+        },
         {
           'sleek', -- sql
           condition = function()
             return vim.fn.executable('cargo') == 1
           end,
         },
-        'stylua', -- Used to format Lua code
+        {
+          'stylua', -- Used to format Lua code
+        },
         {
           'markdownlint-cli2',
           condition = function()
             return vim.fn.executable('npm') == 1
           end,
         },
-        'cbfmt',
-        'dprint',
-        'typos-lsp', -- lsp
+        {
+          'docker-language-server', -- lsp
+          condition = function()
+            return vim.fn.executable('docker') == 1
+          end,
+        },
+        {
+          'cbfmt',
+        },
+        {
+          'dprint',
+        },
+        {
+          'typos-lsp', -- lsp
+        },
+        {
+          'yaml-language-server', -- lsp
+        },
       },
     },
   },

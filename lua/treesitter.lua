@@ -1,4 +1,15 @@
-local ensure_installed = { 'bash', 'c', 'cpp', 'go', 'json', 'lua', 'python', 'ruby', 'vim', 'vimdoc' }
+local ensure_installed = {
+  'bash',
+  'c',
+  'cpp',
+  'go',
+  'json',
+  'lua',
+  'python',
+  'ruby',
+  'vim',
+  'vimdoc',
+}
 
 require('nvim-treesitter').install(ensure_installed)
 
