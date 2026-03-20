@@ -61,6 +61,7 @@ return {
         use_libuv_file_watcher = true,
         filtered_items = {
           hide_dotfiles = false,
+          hide_gitignored = false,
         },
       },
       window = {
@@ -812,7 +813,7 @@ return {
     build = 'go install github.com/goropikari/yosupo_judge_client/cmd/yosupocl@latest',
     opts = {
       oj = {
-        tle = 5,
+        tle = 3,
         path = (function()
           if vim.fn.executable('oj') == 1 then
             return 'oj'
@@ -831,6 +832,23 @@ return {
           require('online-judge').test()
         end,
         desc = 'online-judge test',
+      },
+      {
+        '<leader>ao',
+        function()
+          local line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+          local url = string.match(line, 'https?://[%w-_/.?%+=&%%#]+')
+          if url then
+            vim.system({ 'explorer.exe', url }, { text = true }, function(out)
+              if out.code ~= 0 then
+                vim.notify(out.stderr, vim.log.levels.ERROR)
+              end
+            end)
+          else
+            vim.notify('url not found in the first line')
+          end
+        end,
+        desc = 'open problem url',
       },
       {
         '<leader>ai',
