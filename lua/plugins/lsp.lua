@@ -21,10 +21,16 @@ return {
         },
         {
           'clangd', -- lsp
+          condition = function()
+            return vim.fn.executable('g++') == 1
+          end,
         },
         {
           'codelldb',
           version = '*',
+          condition = function()
+            return vim.fn.executable('g++') == 1
+          end,
         },
         {
           'delve',
@@ -52,6 +58,12 @@ return {
         },
         {
           'gopls', -- lsp
+          condition = function()
+            return vim.fn.executable('go') == 1
+          end,
+        },
+        {
+          'revive',
           condition = function()
             return vim.fn.executable('go') == 1
           end,
