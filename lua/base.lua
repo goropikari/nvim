@@ -15,6 +15,34 @@ vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 
+function _G.status_filepath()
+  local file = vim.api.nvim_buf_get_name(0)
+  if file == '' then
+    return '[No Name]'
+  end
+
+  local path = vim.fn.fnamemodify(file, ':p:~')
+
+  if vim.fn.strdisplaywidth(path) <= 50 then
+    return path
+  end
+
+  local parts = vim.split(path, '/', { plain = true })
+
+  if #parts <= 1 then
+    return path
+  end
+
+  for i = 1, #parts - 1 do
+    local part = parts[i]
+    if part ~= '' and part ~= '~' then
+      parts[i] = vim.fn.strcharpart(part, 0, 1)
+    end
+  end
+
+  return table.concat(parts, '/')
+end
+
 -- vim.o.statusline = '%f %m %=%r%{%v:lua.require("nvim-web-devicons").get_icon_by_filetype(&filetype)%} %y bufnr=%n'
 -- %f: relative file path
 -- %m: modified flag
@@ -23,7 +51,7 @@ vim.o.shiftwidth = 4
 -- %y: file type
 -- %n: buffer number
 -- %P: percentage through the file
-vim.o.statusline = '%f %m %=%r %y bufnr=%n %P'
+vim.o.statusline = "%{get(b:,'gitsigns_head','')} %{%v:lua.status_filepath()%} %m %=%r %y bufnr=%n %P"
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'go' },

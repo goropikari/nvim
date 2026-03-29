@@ -15,12 +15,6 @@ return {
     end,
   },
   {
-    -- hex を色を付けて表示する
-    -- :ColorizerToggle で有効になる
-    'norcalli/nvim-colorizer.lua',
-    cmd = { 'ColorizerToggle' },
-  },
-  {
     -- sidebar file explorer
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v3.x',
@@ -128,29 +122,11 @@ return {
         desc = '[ ] Find existing buffers',
       },
       {
-        '<leader>/',
-        function()
-          -- You can pass additional configuration to telescope to change theme, layout, etc.
-          require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
-            winblend = 10,
-            previewer = false,
-          }))
-        end,
-        desc = '[/] Fuzzily search in current buffer',
-      },
-      {
         '<leader>p',
         function()
-          require('telescope.builtin').find_files({ hidden = true, file_ignore_patterns = { '.git/' } })
+          require('telescope.builtin').find_files({ hidden = false, file_ignore_patterns = { '.git/' } })
         end,
         desc = 'search file',
-      },
-      {
-        '<leader>sb',
-        function()
-          require('telescope.builtin').current_buffer_fuzzy_find()
-        end,
-        desc = 'Search current Buffer',
       },
       {
         '<leader>sf',
@@ -158,6 +134,13 @@ return {
           require('telescope.builtin').find_files()
         end,
         desc = 'Search Files',
+      },
+      {
+        '<leader>sb',
+        function()
+          require('telescope.builtin').current_buffer_fuzzy_find()
+        end,
+        desc = 'Search current Buffer',
       },
       {
         '<leader>sg',
@@ -173,96 +156,90 @@ return {
         end,
         desc = 'Lists the previous pickers',
       },
+    },
+  },
+  -- {
+  --   -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+  --   -- command が pop up window で表示される
+  --   'folke/noice.nvim',
+  --   event = 'VeryLazy',
+  --   opts = {
+  --     lsp = {
+  --       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+  --       override = {
+  --         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+  --         ['vim.lsp.util.stylize_markdown'] = true,
+  --         ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+  --       },
+  --     },
+  --     -- you can enable a preset for easier configuration
+  --     presets = {
+  --       bottom_search = false, -- use a classic bottom cmdline for search
+  --       command_palette = true, -- position the cmdline and popupmenu together
+  --       long_message_to_split = false, -- long messages will be sent to a split
+  --       inc_rename = false, -- enables an input dialog for inc-rename.nvim
+  --       lsp_doc_border = false, -- add a border to hover docs and signature help
+  --     },
+  --   },
+  --   dependencies = {
+  --     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+  --     'MunifTanjim/nui.nvim',
+  --     -- OPTIONAL:
+  --     --   `nvim-notify` is only needed, if you want to use the notification view.
+  --     --   If not available, we use `mini` as the fallback
+  --     -- "rcarriga/nvim-notify",
+  --   },
+  --   keys = {
+  --     {
+  --       '<leader>nh',
+  --       function()
+  --         require('noice').cmd('history')
+  --       end,
+  --       desc = 'Noice History',
+  --     },
+  --     {
+  --       '<leader>ne',
+  --       function()
+  --         require('noice').cmd('error')
+  --       end,
+  --       desc = 'Noice Error',
+  --     },
+  --     {
+  --       '<leader>nl',
+  --       function()
+  --         require('noice').cmd('last')
+  --       end,
+  --       desc = 'Noice Last',
+  --     },
+  --   },
+  -- },
+  {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    opts = {
+      input = {
+        enabled = true,
+      },
+      picker = {
+        enabled = true,
+        ui_select = true,
+      },
+    },
+    keys = {
       {
-        -- zenn or hugo article list
-        '<leader>zz',
+        '<leader>:',
         function()
-          if vim.uv.fs_stat('content') then
-            require('telescope').extensions.hugo.hugo()
-          elseif vim.uv.fs_stat('articles') then
-            require('telescope').extensions.zenn.zenn()
-          end
+          require('snacks').picker.commands()
         end,
-        desc = 'search article',
+        desc = 'Command picker',
       },
     },
   },
   {
-    -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
-    -- command が pop up window で表示される
-    'folke/noice.nvim',
-    event = 'VeryLazy',
-    opts = {
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-          ['vim.lsp.util.stylize_markdown'] = true,
-          ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
-        },
-      },
-      -- you can enable a preset for easier configuration
-      presets = {
-        bottom_search = false, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = false, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
-      },
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      'MunifTanjim/nui.nvim',
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      -- "rcarriga/nvim-notify",
-    },
-    keys = {
-      {
-        '<leader>nh',
-        function()
-          require('noice').cmd('history')
-        end,
-        desc = 'Noice History',
-      },
-      {
-        '<leader>ne',
-        function()
-          require('noice').cmd('error')
-        end,
-        desc = 'Noice Error',
-      },
-      {
-        '<leader>nl',
-        function()
-          require('noice').cmd('last')
-        end,
-        desc = 'Noice Last',
-      },
-    },
-  },
-  {
-    -- buffer を tab で表示する
-    'romgrk/barbar.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-    },
-    init = function()
-      vim.g.barbar_auto_setup = false
-    end,
-    opts = {
-      animation = false,
-    },
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
-    keys = {
-      -- { '<leader>bn', '<Cmd>BufferNext<CR>', desc = 'Buffer Next' },
-      -- { '<leader>bN', '<Cmd>BufferPrevious<CR>', desc = 'Buffer Previous' },
-      { '<leader>bca', '<Cmd>BufferCloseAllButCurrent<CR><C-w><C-o><CR>', desc = 'close all buffer but current' },
-      -- { '<leader>bcc', '<Cmd>BufferClose<CR><Cmd>q<CR>', desc = 'close buffer' },
-    },
+    'goropikari/tabflow.nvim',
+    -- dir = '~/workspace/github/tabflow.nvim',
+    opts = {},
   },
   {
     -- Highlight, edit, and navigate code
@@ -289,7 +266,7 @@ return {
     main = 'ibl',
     ---@module "ibl"
     ---@type ibl.config
-    config = function()
+    config = function() ---@diagnostic disable-line
       local highlight = {
         'RainbowRed',
         'RainbowYellow',
@@ -945,47 +922,38 @@ return {
     },
   },
   {
-    'goropikari/zenn.nvim',
-    dev = true,
-    config = true,
-    cmd = { 'Zenn' },
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
+    'goropikari/terminals.nvim',
+    opts = {
+      keymaps = {
+        next = { lhs = '<A-n>', modes = { 'n', 't' } },
+        move_right = { lhs = '<C-A-n>', modes = { 'n', 't' } },
+      },
+      terminal_position = 'bottom',
+    },
+    keys = {
       {
-        'goropikari/front-matter.nvim',
-        dev = true,
-        opts = {},
-        build = vim.fn.executable('go') == 1 and 'make build' or 'make setup',
+        '<c-t>',
+        function()
+          require('terminals.terminal').toggle()
+        end,
+      },
+      {
+        '<leader>ss',
+        function()
+          require('terminals.terminal').send_current_line()
+        end,
+        mode = 'n',
+        desc = 'send line to terminal',
+      },
+      {
+        '<leader>ss',
+        function()
+          require('terminals.terminal').send_visual_selection()
+        end,
+        mode = { 'v' },
+        desc = 'Send selection to terminal',
       },
     },
-  },
-  {
-    'goropikari/telescope-hugo.nvim',
-    dev = true,
-    lazy = true,
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-      {
-        'goropikari/front-matter.nvim',
-        dev = true,
-        opts = {},
-        build = vim.fn.executable('go') == 1 and 'make build' or 'make setup',
-      },
-    },
-  },
-  -- {
-  --   'willothy/flatten.nvim',
-  --   version = 'v0.5.1',
-  --   opts = {},
-  --   lazy = false,
-  -- },
-  {
-    'goropikari/tabterm.nvim',
-    dependencies = {
-      'akinsho/toggleterm.nvim',
-    },
-    dev = true,
-    opts = {},
   },
   {
     'goropikari/pict.nvim',

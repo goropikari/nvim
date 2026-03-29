@@ -116,6 +116,9 @@ return {
         {
           'yaml-language-server', -- lsp
         },
+        {
+          'checkmake', -- Makefile linter
+        },
       },
     },
   },

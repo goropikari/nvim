@@ -1,39 +1,100 @@
 return {
   {
-    'github/copilot.vim',
-    version = '*',
-    event = 'BufEnter',
-    cond = os.getenv('DISABLE_COPILOT') ~= '1',
-  },
-  {
-    'CopilotC-Nvim/CopilotChat.nvim',
-    version = '*',
-    cond = os.getenv('DISABLE_COPILOT') ~= '1',
-    dependencies = {
-      { 'github/copilot.vim' },
-      { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
-    },
-    build = 'make tiktoken', -- Only on MacOS or Linux
+    'goropikari/ollama-completion.nvim',
+    event = 'InsertEnter',
+    cond = os.getenv('DISABLE_OLLAMA') ~= '1',
     opts = {
-      debug = false,
-      window = {
-        layout = 'vertical',
-        width = 0.4,
-      },
+      url = os.getenv('OLLAMA_URL'),
+      -- model = 'qwen2.5-coder:1.5b',
+      model = 'qwen2.5-coder:3b',
+      -- model = 'qwen3-coder:30b',
+      debounce_ms = 500,
     },
-    cmd = { 'CopilotChat' },
-    keys = {
-      {
-        '<leader>gcc',
-        function()
-          vim.cmd('CopilotChat')
-        end,
-        desc = 'CopilotChat - Quick chat',
-      },
-    },
+    -- opts = {
+    --   url = os.getenv('ANTHROPIC_BASE_URL'),
+    --   model = 'stable-code:3b',
+    --   prompt_template = '<FIM_PREFIX>%s<FIM_PREFIX>%s<FIM_MIDDLE>',
+    --   options = {
+    --     stop = {
+    --       '<FIM_PREFIX>',
+    --       '<FIM_MIDDLE>',
+    --       '<FIM_SUFFIX>',
+    --       '<FIM_PAD>',
+    --     },
+    --   },
+    -- },
+    -- opts = {
+    --   url = os.getenv('ANTHROPIC_BASE_URL'),
+    --   model = 'starcoder2:3b',
+    --   prompt_template = '<fim_prefix>%s<fim_prefix>%s<fim_middle>',
+    --   options = {
+    --     stop = {
+    --       '<fim_prefix>',
+    --       '<fim_middle>',
+    --       '<fim_suffix>',
+    --       '<fim_pad>',
+    --       '<endoftext>',
+    --       '<file_sep>',
+    --     },
+    --   },
+    -- },
+    -- opts = {
+    --   url = os.getenv('ANTHROPIC_BASE_URL'),
+    --   model = 'codegemma:2b',
+    --   options = {
+    --     stop = {
+    --       '<|file_separator|>',
+    --     },
+    --   },
+    -- },
+    -- opts = {
+    --   url = os.getenv('ANTHROPIC_BASE_URL'),
+    --   model = 'codellama:7b-code',
+    --   prompt_template = '<PRE>%s<SUF>%s<MID>',
+    --   options = {
+    --     stop = {
+    --       '<PRE>',
+    --       '<SUF>',
+    --       '<MID>',
+    --     },
+    --   },
+    -- },
   },
+  -- {
+  --   'github/copilot.vim',
+  --   version = '*',
+  --   event = 'BufEnter',
+  --   cond = os.getenv('DISABLE_COPILOT') ~= '1',
+  -- },
+  -- {
+  --   'CopilotC-Nvim/CopilotChat.nvim',
+  --   version = '*',
+  --   cond = os.getenv('DISABLE_COPILOT') ~= '1',
+  --   dependencies = {
+  --     { 'github/copilot.vim' },
+  --     { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
+  --   },
+  --   build = 'make tiktoken', -- Only on MacOS or Linux
+  --   opts = {
+  --     debug = false,
+  --     window = {
+  --       layout = 'vertical',
+  --       width = 0.4,
+  --     },
+  --   },
+  --   cmd = { 'CopilotChat' },
+  --   keys = {
+  --     {
+  --       '<leader>gcc',
+  --       function()
+  --         vim.cmd('CopilotChat')
+  --       end,
+  --       desc = 'CopilotChat - Quick chat',
+  --     },
+  --   },
+  -- },
   os.getenv('COMPANY_LLM_PLUGIN_PATH') and {
-    dir = os.getenv('COMPANY_LLM_PLUGIN_PATH'),
-    opts = {},
-  },
+      dir = os.getenv('COMPANY_LLM_PLUGIN_PATH'),
+      opts = {},
+    },
 }

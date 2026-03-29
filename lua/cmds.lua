@@ -30,6 +30,14 @@ api.nvim_create_user_command('LiveServer', function(opts)
   end)
 end, { nargs = '*' })
 
+api.nvim_create_user_command('MessagesBuffer', function()
+  vim.cmd('new')
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'wipe'
+  vim.bo.swapfile = false
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(vim.fn.execute('messages'), '\n'))
+end, {})
+
 -- https://github.com/LazyVim/LazyVim/blob/v12.38.2/lua/lazyvim/config/autocmds.lua
 local function augroup(name)
   return api.nvim_create_augroup(name, { clear = true })
