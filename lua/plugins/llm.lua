@@ -2,7 +2,7 @@ return {
   {
     'goropikari/ollama-completion.nvim',
     event = 'InsertEnter',
-    cond = os.getenv('DISABLE_OLLAMA') ~= '1',
+    cond = os.getenv('ENABLE_OLLAMA_COMPLETION') == '1',
     opts = {
       url = os.getenv('OLLAMA_URL'),
       -- model = 'qwen2.5-coder:1.5b',

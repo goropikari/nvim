@@ -151,6 +151,9 @@ vim.keymap.set('n', 's', '<NOP>')
 -- command history 表示を無効化
 vim.keymap.set('n', 'q:', '<NOP>')
 
+-- Messages command
+vim.keymap.set('n', '<leader>ne', '<cmd>Messages<cr>', { desc = 'Messages' })
+
 -- Dockerfile から始まるファイルの filetype を dockerfile に設定
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = 'Dockerfile*',

@@ -27,7 +27,6 @@ return {
         },
         {
           'codelldb',
-          version = '*',
           condition = function()
             return vim.fn.executable('g++') == 1
           end,

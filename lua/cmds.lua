@@ -30,12 +30,26 @@ api.nvim_create_user_command('LiveServer', function(opts)
   end)
 end, { nargs = '*' })
 
-api.nvim_create_user_command('MessagesBuffer', function()
-  vim.cmd('new')
-  vim.bo.buftype = 'nofile'
-  vim.bo.bufhidden = 'wipe'
-  vim.bo.swapfile = false
-  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(vim.fn.execute('messages'), '\n'))
+api.nvim_create_user_command('Messages', function()
+  local buf = api.nvim_create_buf(false, true)
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local win = api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    col = math.floor((vim.o.columns - width) / 2),
+    row = math.floor((vim.o.lines - height) / 2),
+    style = 'minimal',
+    border = 'rounded',
+  })
+
+  vim.bo[buf].buftype = 'nofile'
+  vim.bo[buf].bufhidden = 'wipe'
+  vim.bo[buf].swapfile = false
+  api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(vim.fn.execute('messages'), '\n'))
+  api.nvim_buf_set_keymap(buf, 'n', 'q', '<cmd>close<cr>', { noremap = true, silent = true })
+  vim.bo[buf].modifiable = false
 end, {})
 
 -- https://github.com/LazyVim/LazyVim/blob/v12.38.2/lua/lazyvim/config/autocmds.lua
