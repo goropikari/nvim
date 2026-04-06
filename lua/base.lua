@@ -8,7 +8,9 @@ vim.env.LANG = 'en_US.UTF-8'
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 vim.o.shell = 'bash'
-vim.o.exrc = true -- current directory の .nvim.lua を読み込む
+
+-- persistence.nvim, tabflow.nvim での復元用設定
+vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,globals,options,localoptions'
 
 -- tab の表示幅
 vim.o.expandtab = true

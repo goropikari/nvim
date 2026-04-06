@@ -1,3 +1,13 @@
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    -- セッションファイルが存在する場合のみ読み込む
+    local session_file = require('persistence').current()
+    if vim.fn.filereadable(session_file) == 1 then
+      require('persistence').load()
+    end
+  end,
+})
+
 return {
   {
     'neanias/everforest-nvim',
@@ -182,18 +192,101 @@ return {
     },
   },
   {
+    'folke/persistence.nvim',
+    lazy = false,
+    config = function()
+      require('persistence').setup({
+        dir = vim.fn.stdpath('state') .. '/persistence.nvim/',
+        need = 3,
+      })
+
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'PersistenceSavePre',
+        callback = function()
+          for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+            local wins = vim.api.nvim_tabpage_list_wins(tab)
+            for _, win in ipairs(wins) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              local dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':p:h')
+              -- Git リポジトリのルートかチェック
+              if vim.fn.isdirectory(dir .. '/.git') == 1 then
+                vim.api.nvim_set_current_tabpage(tab)
+                return
+              end
+            end
+          end
+        end,
+      })
+    end,
+    keys = {
+      {
+        '<leader>qs',
+        function()
+          require('persistence').load()
+        end,
+        desc = 'restore the session for current directory',
+      },
+      {
+        '<leader>qS',
+        function()
+          require('persistence').select()
+        end,
+        desc = 'select restore session',
+      },
+      {
+        '<leader>qC',
+        function()
+          local path = vim.fn.stdpath('state') .. '/persistence.nvim/'
+          local entries = vim.fn.readdir(path)
+
+          for _, name in ipairs(entries) do
+            local full = path .. '/' .. name
+            local stat = vim.loop.fs_stat(full)
+
+            if stat then
+              if stat.type == 'directory' then
+                -- "rf" = recursive + force
+                vim.fn.delete(full, 'rf')
+              else
+                vim.fn.delete(full)
+              end
+            end
+          end
+        end,
+        desc = 'delete all sessions',
+      },
+    },
+  },
+  {
     'goropikari/tabflow.nvim',
-    -- dir = '~/workspace/github/tabflow.nvim',
-    opts = {},
+    lazy = false,
+    opts = {
+      commands = {
+        'TabflowOpenWorktree',
+      },
+    },
+    keys = {
+      {
+        '<C-A-t>',
+        function()
+          require('tabflow.actions').toggle_mode()
+        end,
+        desc = 'go to the previous tab',
+      },
+      {
+        '<leader>bca',
+        function()
+          require('tabflow.actions').delete_other_buffers()
+        end,
+        desc = 'close all buffers except the current one',
+      },
+    },
   },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
     lazy = false,
-    -- dependencies = {
-    --   'nvim-treesitter/nvim-treesitter-textobjects',
-    -- },
     build = ':TSUpdate',
   },
   {
@@ -868,12 +961,21 @@ return {
   },
   {
     'goropikari/terminals.nvim',
+    lazy = false,
     opts = {
+      commands = {
+        'TerminalClean',
+        'TerminalCleanAll',
+        'TerminalPicker',
+        'TerminalSetPosi',
+      },
       keymaps = {
         next = { lhs = '<A-n>', modes = { 'n', 't' } },
         move_right = { lhs = '<C-A-n>', modes = { 'n', 't' } },
       },
       terminal_position = 'bottom',
+      -- backend = 'tmux',
+      backend = 'dtach',
     },
     keys = {
       {
