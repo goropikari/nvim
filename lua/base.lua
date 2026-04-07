@@ -9,9 +9,6 @@ vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 vim.o.shell = 'bash'
 
--- persistence.nvim, tabflow.nvim での復元用設定
-vim.o.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,globals,options,localoptions'
-
 -- tab の表示幅
 vim.o.expandtab = true
 vim.o.tabstop = 4

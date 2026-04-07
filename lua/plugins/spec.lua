@@ -1,13 +1,3 @@
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    -- セッションファイルが存在する場合のみ読み込む
-    local session_file = require('persistence').current()
-    if vim.fn.filereadable(session_file) == 1 then
-      require('persistence').load()
-    end
-  end,
-})
-
 return {
   {
     'neanias/everforest-nvim',
@@ -90,85 +80,6 @@ return {
     },
   },
   {
-    -- Fuzzy Finder (files, lsp, etc)
-    'nvim-telescope/telescope.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'folke/which-key.nvim',
-      'nvim-lua/plenary.nvim',
-      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-      -- Only load if `make` is available. Make sure you have the system
-      -- requirements installed.
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        -- NOTE: If you are having trouble with this installation,
-        --       refer to the README for telescope-fzf-native for more instructions.
-        build = 'make',
-        cond = function()
-          return vim.fn.executable('make') == 1
-        end,
-      },
-    },
-    config = function()
-      -- local actions = require('telescope.actions')
-      require('telescope').setup({})
-
-      -- Enable telescope fzf native, if installed
-      pcall(require('telescope').load_extension, 'fzf')
-    end,
-    keys = {
-      {
-        '<leader>?',
-        function()
-          require('telescope.builtin').oldfiles()
-        end,
-        desc = '[?] Find recently opened files',
-      },
-      {
-        '<leader><space>',
-        function()
-          require('telescope.builtin').buffers()
-        end,
-        desc = '[ ] Find existing buffers',
-      },
-      {
-        '<leader>p',
-        function()
-          require('telescope.builtin').find_files({ hidden = false, file_ignore_patterns = { '.git/' } })
-        end,
-        desc = 'search file',
-      },
-      {
-        '<leader>sf',
-        function()
-          require('telescope.builtin').find_files()
-        end,
-        desc = 'Search Files',
-      },
-      {
-        '<leader>sb',
-        function()
-          require('telescope.builtin').current_buffer_fuzzy_find()
-        end,
-        desc = 'Search current Buffer',
-      },
-      {
-        '<leader>sg',
-        function()
-          require('telescope.builtin').live_grep()
-        end,
-        desc = 'Search by Grep',
-      },
-      {
-        '<leader>sp',
-        function()
-          require('telescope.builtin').pickers()
-        end,
-        desc = 'Lists the previous pickers',
-      },
-    },
-  },
-  {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
@@ -189,71 +100,33 @@ return {
         end,
         desc = 'Command picker',
       },
-    },
-  },
-  {
-    'folke/persistence.nvim',
-    lazy = false,
-    config = function()
-      require('persistence').setup({
-        dir = vim.fn.stdpath('state') .. '/persistence.nvim/',
-        need = 3,
-      })
-
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'PersistenceSavePre',
-        callback = function()
-          for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-            local wins = vim.api.nvim_tabpage_list_wins(tab)
-            for _, win in ipairs(wins) do
-              local buf = vim.api.nvim_win_get_buf(win)
-              local dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':p:h')
-              -- Git リポジトリのルートかチェック
-              if vim.fn.isdirectory(dir .. '/.git') == 1 then
-                vim.api.nvim_set_current_tabpage(tab)
-                return
-              end
-            end
-          end
-        end,
-      })
-    end,
-    keys = {
       {
-        '<leader>qs',
+        '<leader><space>',
         function()
-          require('persistence').load()
+          require('snacks').picker.buffers()
         end,
-        desc = 'restore the session for current directory',
+        desc = 'Find existing buffers',
       },
       {
-        '<leader>qS',
+        '<leader>p',
         function()
-          require('persistence').select()
+          require('snacks').picker.files()
         end,
-        desc = 'select restore session',
+        desc = 'search file',
       },
       {
-        '<leader>qC',
+        '<leader>sg',
         function()
-          local path = vim.fn.stdpath('state') .. '/persistence.nvim/'
-          local entries = vim.fn.readdir(path)
-
-          for _, name in ipairs(entries) do
-            local full = path .. '/' .. name
-            local stat = vim.loop.fs_stat(full)
-
-            if stat then
-              if stat.type == 'directory' then
-                -- "rf" = recursive + force
-                vim.fn.delete(full, 'rf')
-              else
-                vim.fn.delete(full)
-              end
-            end
-          end
+          require('snacks').picker.grep()
         end,
-        desc = 'delete all sessions',
+        desc = 'Search by Grep',
+      },
+      {
+        '<leader>P',
+        function()
+          require('snacks').picker.pickers()
+        end,
+        desc = 'Search by Grep',
       },
     },
   },
@@ -442,12 +315,14 @@ return {
     version = '*',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
-      'sindrets/diffview.nvim', -- optional - Diff integration
+      -- 'sindrets/diffview.nvim', -- optional - Diff integration
+      {
+        'esmuellert/codediff.nvim',
+        cmd = 'CodeDiff',
+      },
 
       -- Only one of these is needed.
-      'nvim-telescope/telescope.nvim', -- optional
-      -- 'ibhagwan/fzf-lua', -- optional
-      -- 'echasnovski/mini.pick', -- optional
+      'folke/snacks.nvim',
     },
     config = true,
     keys = {
@@ -485,11 +360,6 @@ return {
         mode = { 'v', 'n' },
       },
     },
-  },
-  {
-    'sindrets/diffview.nvim',
-    cmd = { 'DiffViewOpen' },
-    opts = {},
   },
   {
     -- Autocompletion
@@ -727,7 +597,7 @@ return {
           end,
           desc = 'Open floating diagnostic message',
         },
-        { '<leader>q', vim.diagnostic.setloclist, desc = 'Open diagnostics list' },
+        { '<leader>Q', vim.diagnostic.setloclist, desc = 'Open diagnostics list' },
 
         -- clipboard へコピー
         {
@@ -967,15 +837,13 @@ return {
         'TerminalClean',
         'TerminalCleanAll',
         'TerminalPicker',
-        'TerminalSetPosi',
+        'TerminalSetPosition',
       },
       keymaps = {
         next = { lhs = '<A-n>', modes = { 'n', 't' } },
         move_right = { lhs = '<C-A-n>', modes = { 'n', 't' } },
       },
       terminal_position = 'bottom',
-      -- backend = 'tmux',
-      backend = 'dtach',
     },
     keys = {
       {
@@ -1002,10 +870,6 @@ return {
       },
     },
   },
-  -- {
-  --   'goropikari/delegate.nvim',
-  --   opts = {},
-  -- },
   {
     'goropikari/pict.nvim',
     dev = true,

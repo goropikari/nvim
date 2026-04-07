@@ -7,8 +7,6 @@ return {
       -- Creates a beautiful debugger UI
       'rcarriga/nvim-dap-ui',
       'nvim-neotest/nvim-nio',
-      -- 'stevearc/dressing.nvim', -- vim.ui.input を cursor で選択できるようにする
-      'nvim-telescope/telescope-dap.nvim',
       {
         -- code 中に変数の値を表示する
         'theHamsta/nvim-dap-virtual-text',
