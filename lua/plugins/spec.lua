@@ -870,9 +870,12 @@ return {
       {
         '<leader>ss',
         function()
-          require('terminals.terminal').send_visual_selection()
+          vim.cmd([[ execute "normal! \<ESC>" ]])
+          vim.schedule(function()
+            require('terminals.terminal').send_visual_selection()
+          end)
         end,
-        mode = { 'v' },
+        mode = 'v',
         desc = 'Send selection to terminal',
       },
     },
