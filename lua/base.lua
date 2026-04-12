@@ -9,6 +9,22 @@ vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 vim.o.shell = 'bash'
 
+-- -- message 系での enter 入力省略
+-- -- ref: https://zenn.dev/kawarimidoll/articles/4da7458c102c1f
+-- vim.o.cmdheight = 0
+-- local ok, extui = pcall(require, 'vim._core.ui2')
+-- if ok then
+--   extui.enable({
+--     enable = true, -- extuiを有効化
+--     msg = {
+--       pos = 'cmd', -- 'box'か'cmd'だがcmdheight=0だとどっちでも良い？（記事後述）
+--       box = {
+--         timeout = 5000, -- boxメッセージの表示時間 ミリ秒
+--       },
+--     },
+--   })
+-- end
+
 -- tab の表示幅
 vim.o.expandtab = true
 vim.o.tabstop = 4
@@ -42,15 +58,12 @@ function _G.status_filepath()
   return table.concat(parts, '/')
 end
 
--- vim.o.statusline = '%f %m %=%r%{%v:lua.require("nvim-web-devicons").get_icon_by_filetype(&filetype)%} %y bufnr=%n'
 -- %f: relative file path
 -- %m: modified flag
 -- %=: separates left and right sections
 -- %r: readonly flag
 -- %y: file type
--- %n: buffer number
--- %P: percentage through the file
-vim.o.statusline = "%{get(b:,'gitsigns_head','')} %{%v:lua.status_filepath()%} %m %=%r %y bufnr=%n %P"
+vim.o.statusline = "%{get(b:,'gitsigns_head','')} %{%v:lua.status_filepath()%} %m %=%r %{%v:lua.require('claude').statusline_summary()%} %y"
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'go' },
@@ -140,12 +153,18 @@ vim.keymap.set('n', 'X', '"_X', { silent = true })
 -- terminal mode を escape で抜ける
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
 
+-- terminal mode で esc を terminal で開いているアプリに渡す
+vim.keymap.set('t', '<C-q>', function()
+  vim.fn.chansend(vim.b.terminal_job_id, '\x1b')
+end)
+
 -- default のコメントキーマップを無効化
 vim.keymap.del({ 'n', 'v' }, 'gc')
 vim.keymap.del({ 'n' }, 'gcc')
 
 -- 削除して挿入のキーバインドを無効化
 vim.keymap.set('n', 's', '<NOP>')
+vim.keymap.set('n', 'S', '<NOP>')
 
 -- command history 表示を無効化
 vim.keymap.set('n', 'q:', '<NOP>')

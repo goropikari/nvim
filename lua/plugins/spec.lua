@@ -726,7 +726,9 @@ return {
           if url then
             vim.system({ 'explorer.exe', url }, { text = true }, function(out)
               if out.code ~= 0 then
-                vim.notify(out.stderr, vim.log.levels.ERROR)
+                vim.schedule(function()
+                  vim.notify(out.stderr, vim.log.levels.ERROR)
+                end)
               end
             end)
           else
@@ -778,11 +780,13 @@ return {
               'test_' .. suffix,
               'python3 ' .. filename_with_ext,
             }, { text = true }, function(out)
-              if out.code ~= 0 then
-                vim.notify(out.stderr, vim.log.levels.ERROR)
-              else
-                vim.notify(out.stdout)
-              end
+              vim.schedule(function()
+                if out.code ~= 0 then
+                  vim.notify(out.stderr, vim.log.levels.ERROR)
+                else
+                  vim.notify(out.stdout)
+                end
+              end)
             end)
           end, { buffer = buf, noremap = true, silent = true })
         end,
@@ -803,25 +807,29 @@ return {
               'make',
               vim.fn.fnamemodify(filename_with_ext, ':t:r'),
             }, { text = true }, function(out)
-              if out.code ~= 0 then
-                vim.notify(out.stderr, vim.log.levels.ERROR)
-              else
-                vim.notify(out.stdout)
-                vim.system({
-                  'oj',
-                  'g/o',
-                  '-d',
-                  'test_' .. suffix,
-                  '-c',
-                  './' .. filename,
-                }, { text = true }, function(out2)
-                  if out2.code ~= 0 then
-                    vim.notify(out2.stderr, vim.log.levels.ERROR)
-                  else
-                    vim.notify(out2.stdout)
-                  end
-                end)
-              end
+              vim.schedule(function()
+                if out.code ~= 0 then
+                  vim.notify(out.stderr, vim.log.levels.ERROR)
+                else
+                  vim.notify(out.stdout)
+                  vim.system({
+                    'oj',
+                    'g/o',
+                    '-d',
+                    'test_' .. suffix,
+                    '-c',
+                    './' .. filename,
+                  }, { text = true }, function(out2)
+                    vim.schedule(function()
+                      if out2.code ~= 0 then
+                        vim.notify(out2.stderr, vim.log.levels.ERROR)
+                      else
+                        vim.notify(out2.stdout)
+                      end
+                    end)
+                  end)
+                end
+              end)
             end)
           end, { buffer = buf, noremap = true, silent = true })
         end,
@@ -834,8 +842,6 @@ return {
     lazy = false,
     opts = {
       commands = {
-        'TerminalClean',
-        'TerminalCleanAll',
         'TerminalPicker',
         'TerminalSetPosition',
       },
@@ -844,6 +850,7 @@ return {
         move_right = { lhs = '<C-A-n>', modes = { 'n', 't' } },
       },
       terminal_position = 'bottom',
+      terminal_height = 0.4,
     },
     keys = {
       {
@@ -871,21 +878,15 @@ return {
     },
   },
   {
-    'goropikari/pict.nvim',
-    dev = true,
-    ft = { 'pict' },
-    opts = {},
-    keys = {
-      {
-        '<leader>tp',
-        function()
-          require('pict').markdown()
-        end,
-        desc = 'pict',
-      },
-    },
+    'direnv/direnv.vim',
   },
   {
-    'direnv/direnv.vim',
+    'goropikari/devcontainer-template.nvim',
+    dependencies = {
+      'folke/snacks.nvim',
+    },
+    opts = {
+      picker = 'snacks',
+    },
   },
 }

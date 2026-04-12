@@ -38,6 +38,7 @@ require('lazy').setup({
     enabled = true,
     notify = false, -- get a notification when changes are found
   },
+  ---@diagnostic disable-next-line
   dev = {
     ---@type string | fun(plugin: LazyPlugin): string directory where you store your local plugin projects
     path = '~/workspace/github',
