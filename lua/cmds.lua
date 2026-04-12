@@ -67,15 +67,6 @@ api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   end,
 })
 
--- api.nvim_create_autocmd({ 'BufEnter' }, {
---   pattern = { 'term://*' },
---   callback = function(event)
---     if vim.bo.filetype == 'toggleterm' then
---       vim.cmd('startinsert')
---     end
---   end,
--- })
-
 -- resize splits if window got resized
 api.nvim_create_autocmd({ 'VimResized' }, {
   group = augroup('resize_splits'),

@@ -68,15 +68,15 @@ vim.o.statusline = "%{get(b:,'gitsigns_head','')} %{%v:lua.status_filepath()%} %
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'go' },
   callback = function()
-    vim.opt.expandtab = false
+    vim.bo.expandtab = false
   end,
 })
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'lua' },
   callback = function()
-    vim.o.expandtab = true
-    vim.o.tabstop = 2
-    vim.o.shiftwidth = 2
+    vim.bo.expandtab = true
+    vim.bo.tabstop = 2
+    vim.bo.shiftwidth = 2
   end,
 })
 
@@ -127,8 +127,13 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
+local function is_docker()
+  local stat = vim.uv.fs_stat('/.dockerenv')
+  return stat ~= nil
+end
+
 -- https://neovim.io/doc/user/provider.html#clipboard-osc52
-if vim.fn.has('wsl') == 1 or os.getenv('HOSTNAME') ~= nil then
+if vim.fn.has('wsl') == 1 or is_docker() then
   vim.g.clipboard = {
     name = 'OSC 52',
     copy = {

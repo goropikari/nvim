@@ -118,6 +118,9 @@ return {
         {
           'checkmake', -- Makefile linter
         },
+        {
+          'shellcheck', -- shell linter
+        },
       },
     },
   },
@@ -125,8 +128,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
   },
   {
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
+    'neovim/nvim-lspconfig', -- LSP Configuration & Plugins
     version = '*',
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -231,8 +233,7 @@ return {
     end,
   },
   {
-    -- Extensible UI for Neovim notifications and LSP progress messages.
-    'j-hui/fidget.nvim',
+    'j-hui/fidget.nvim', -- Extensible UI for Neovim notifications and LSP progress messages.
     version = '*',
     opts = {},
   },

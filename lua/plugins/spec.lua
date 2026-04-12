@@ -15,15 +15,13 @@ return {
     end,
   },
   {
-    -- sidebar file explorer
-    'nvim-neo-tree/neo-tree.nvim',
+    'nvim-neo-tree/neo-tree.nvim', -- sidebar file explorer
     branch = 'v3.x',
     -- cmd = 'Neotree',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
       'MunifTanjim/nui.nvim',
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
     keys = {
       {
@@ -34,23 +32,11 @@ return {
         desc = 'Explorer NeoTree',
       },
     },
-    deactivate = function()
-      vim.cmd([[Neotree close]])
-    end,
-    init = function()
-      if vim.fn.argc(-1) == 1 then
-        local stat = vim.uv.fs_stat(vim.fn.argv(0))
-        if stat and stat.type == 'directory' then
-          require('neo-tree')
-        end
-      end
-    end,
     opts = {
       sources = { 'filesystem', 'buffers', 'git_status', 'document_symbols' },
       open_files_do_not_replace_types = { 'terminal', 'Trouble', 'trouble', 'qf', 'Outline' },
-      hijack_netrw_behavior = 'disabled',
       filesystem = {
-        bind_to_cwd = false,
+        bind_to_cwd = true,
         follow_current_file = { enabled = true },
         use_libuv_file_watcher = true,
         filtered_items = {
@@ -60,14 +46,6 @@ return {
       },
       window = {
         position = 'left',
-        mappings = {
-          ['<space>'] = 'none',
-          ['Y'] = function(state)
-            local node = state.tree:get_node()
-            local path = node:get_id()
-            vim.fn.setreg('+', path, 'c')
-          end,
-        },
       },
       default_component_configs = {
         indent = {
@@ -156,8 +134,7 @@ return {
     },
   },
   {
-    -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
+    'nvim-treesitter/nvim-treesitter', -- Highlight, edit, and navigate code
     branch = 'main',
     lazy = false,
     build = ':TSUpdate',
@@ -172,8 +149,7 @@ return {
     },
   },
   {
-    -- indent を見やすくする
-    'lukas-reineke/indent-blankline.nvim',
+    'lukas-reineke/indent-blankline.nvim', -- indent を見やすくする
     main = 'ibl',
     ---@module "ibl"
     ---@type ibl.config
@@ -210,8 +186,7 @@ return {
     end,
   },
   {
-    -- cursor 下と同じ文字列に下線を引く'
-    'yamatsum/nvim-cursorline',
+    'yamatsum/nvim-cursorline', -- cursor 下と同じ文字列に下線を引く'
     opts = {
       cursorline = {
         enable = false,
@@ -219,8 +194,7 @@ return {
     },
   },
   {
-    -- splitting/joining blocks of code like arrays, hashes, statements, objects, dictionaries, etc.
-    'Wansmer/treesj',
+    'Wansmer/treesj', -- splitting/joining blocks of code like arrays, hashes, statements, objects, dictionaries, etc.
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     keys = {
       {
@@ -242,13 +216,11 @@ return {
     },
   },
   {
-    -- :FixWhitespace で末端空白を消す
-    'bronson/vim-trailing-whitespace',
+    'bronson/vim-trailing-whitespace', -- :FixWhitespace で末端空白を消す
     cmd = { 'FixWhitespace' },
   },
   {
-    -- Ctrl-/ でコメント
-    'numToStr/Comment.nvim',
+    'numToStr/Comment.nvim', -- Ctrl-/ でコメント
     opts = {
       mappings = false,
     },
@@ -283,8 +255,7 @@ return {
     },
   },
   {
-    -- Add/delete/change surrounding pairs
-    'kylechui/nvim-surround',
+    'kylechui/nvim-surround', -- Add/delete/change surrounding pairs
     version = '*', -- Use for stability; omit to use `main` branch for the latest features
     opts = {
       keymaps = {
@@ -334,8 +305,7 @@ return {
     },
   },
   {
-    -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
+    'lewis6991/gitsigns.nvim', -- Adds git related signs to the gutter, as well as utilities for managing changes
     version = '*',
     event = 'VeryLazy',
     opts = {
@@ -362,8 +332,7 @@ return {
     },
   },
   {
-    -- Autocompletion
-    'hrsh7th/nvim-cmp',
+    'hrsh7th/nvim-cmp', -- Autocompletion
     event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
@@ -459,8 +428,7 @@ return {
     end,
   },
   {
-    -- Autoformat
-    'stevearc/conform.nvim',
+    'stevearc/conform.nvim', -- Autoformat
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo', 'ConformEnable', 'ConformDisable' },
     opts = {
@@ -517,9 +485,7 @@ return {
     end,
   },
   {
-    -- コードのアウトラインを表示する
-    -- NOTE: 関数定義や markdown の見出しなどを一覧表示する
-    'stevearc/aerial.nvim',
+    'stevearc/aerial.nvim', -- コードのアウトラインを表示する. 関数定義や markdown の見出しなどを一覧表示する
     lazy = true,
     opts = {},
     -- Optional dependencies
@@ -538,8 +504,7 @@ return {
     },
   },
   {
-    -- 開いている window を番号で選択する
-    'goropikari/window-selector.nvim',
+    'goropikari/window-selector.nvim', -- 開いている window を番号で選択する
     dev = true,
     keys = {
       {
@@ -552,8 +517,7 @@ return {
     },
   },
   {
-    -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
+    'folke/which-key.nvim', -- Useful plugin to show you pending keybinds.
     event = 'VimEnter',
     opts = {
       expand = 1,
@@ -597,7 +561,13 @@ return {
           end,
           desc = 'Open floating diagnostic message',
         },
-        { '<leader>Q', vim.diagnostic.setloclist, desc = 'Open diagnostics list' },
+        {
+          '<leader>q',
+          function()
+            require('snacks').picker.diagnostics_buffer()
+          end,
+          desc = 'Open diagnostics list',
+        },
 
         -- clipboard へコピー
         {
@@ -635,9 +605,6 @@ return {
           desc = 'copy entire file to clipboard',
         },
 
-        -- [[ Noice ]]
-        { '<leader>n', desc = 'Noice' },
-
         -- [[ barbar.nvim ]]
         { '<leader>b', group = 'Buffer' },
         { '<leader>bc', group = 'Buffer Clear' },
@@ -674,8 +641,7 @@ return {
     },
   },
   {
-    -- Highlight todo, notes, etc in comments
-    'folke/todo-comments.nvim',
+    'folke/todo-comments.nvim', -- Highlight todo, notes, etc in comments
     event = 'BufEnter',
     version = '*',
     config = function()
