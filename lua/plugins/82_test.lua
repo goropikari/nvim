@@ -1,14 +1,11 @@
 return {
   {
     'mfussenegger/nvim-dap',
-    -- version = '*',
     commit = 'e47878dcf1ccc30136b30d19ab19fe76946d61cd',
     dependencies = {
-      -- Creates a beautiful debugger UI
       'rcarriga/nvim-dap-ui',
       'nvim-neotest/nvim-nio',
       {
-        -- code 中に変数の値を表示する
         'theHamsta/nvim-dap-virtual-text',
         opts = {},
       },
@@ -121,9 +118,7 @@ return {
     lazy = true,
     ft = { 'c', 'cpp' },
     enabled = vim.fn.executable('g++') == 1 or vim.fn.executable('gcc') == 1,
-    opts = {
-      -- configurations = {},
-    },
+    opts = {},
   },
   {
     'nvim-neotest/neotest',
@@ -131,7 +126,6 @@ return {
     dependencies = {
       'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
-      -- 'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
       {
         'fredrikaverpil/neotest-golang',
@@ -144,7 +138,6 @@ return {
       {
         '<leader>ta',
         function()
-          ---@diagnostic disable-next-line
           require('neotest').run.run({ vim.fn.expand('%') })
           require('neotest').summary.open()
         end,
@@ -153,7 +146,6 @@ return {
       {
         '<leader>td',
         function()
-          ---@diagnostic disable-next-line
           require('neotest').run.run({ strategy = 'dap' })
         end,
         desc = 'Test Debug',
@@ -168,7 +160,6 @@ return {
       {
         '<leader>ts',
         function()
-          ---@diagnostic disable-next-line
           require('neotest').run.run({})
           require('neotest').summary.open()
         end,
@@ -216,7 +207,6 @@ return {
         end
       end
 
-      ---@diagnostic disable-next-line
       require('neotest').setup({
         diagnostic = {
           enabled = true,
@@ -231,8 +221,6 @@ return {
           enabled = true,
           open_on_run = true,
         },
-
-        -- your neotest config here
         adapters = adapters,
         log_level = vim.log.levels.WARN,
       })

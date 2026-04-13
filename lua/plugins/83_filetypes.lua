@@ -8,7 +8,6 @@ return {
     },
     config = function()
       require('openscad')
-      -- load snippets, note requires
       vim.g.openscad_load_snippets = true
     end,
   },
@@ -18,7 +17,7 @@ return {
     dev = true,
   },
   {
-    'MeanderingProgrammer/render-markdown.nvim', -- Make sure to set this up properly if you have lazy=true
+    'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown' },
     opts = {},
   },
@@ -45,7 +44,6 @@ return {
   {
     'goropikari/default-new-file.nvim',
     dev = true,
-    -- ft = { 'plantuml', 'go', 'cpp' },
     opts = {
       pattern = { '*.plantuml', '*.go', '*.cpp', '*.py' },
     },

@@ -11,16 +11,16 @@ return {
     opts = {
       ensure_installed = {
         {
-          'bash-language-server', -- lsp
+          'bash-language-server',
           condition = function()
             return vim.fn.executable('npm') == 1
           end,
         },
         {
-          'buf', --lsp, format
+          'buf',
         },
         {
-          'clangd', -- lsp
+          'clangd',
           condition = function()
             return vim.fn.executable('g++') == 1
           end,
@@ -56,7 +56,7 @@ return {
           end,
         },
         {
-          'gopls', -- lsp
+          'gopls',
           condition = function()
             return vim.fn.executable('go') == 1
           end,
@@ -68,28 +68,28 @@ return {
           end,
         },
         {
-          'python-lsp-server', -- lsp
+          'python-lsp-server',
           condition = function()
             return vim.fn.executable('python3-venv') == 1 or vim.fn.executable('python-venv') == 1
           end,
         },
         {
-          'ruby-lsp', -- lsp
+          'ruby-lsp',
           condition = function()
             return vim.fn.executable('ruby') == 1
           end,
         },
         {
-          'lua-language-server', -- lsp
+          'lua-language-server',
         },
         {
-          'sleek', -- sql
+          'sleek',
           condition = function()
             return vim.fn.executable('cargo') == 1
           end,
         },
         {
-          'stylua', -- Used to format Lua code
+          'stylua',
         },
         {
           'markdownlint-cli2',
@@ -98,7 +98,7 @@ return {
           end,
         },
         {
-          'docker-language-server', -- lsp
+          'docker-language-server',
           condition = function()
             return vim.fn.executable('docker') == 1
           end,
@@ -110,16 +110,16 @@ return {
           'dprint',
         },
         {
-          'typos-lsp', -- lsp
+          'typos-lsp',
         },
         {
-          'yaml-language-server', -- lsp
+          'yaml-language-server',
         },
         {
-          'checkmake', -- Makefile linter
+          'checkmake',
         },
         {
-          'shellcheck', -- shell linter
+          'shellcheck',
         },
       },
     },
@@ -128,50 +128,26 @@ return {
     'hrsh7th/cmp-nvim-lsp',
   },
   {
-    'neovim/nvim-lspconfig', -- LSP Configuration & Plugins
+    'neovim/nvim-lspconfig',
     version = '*',
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself.
-          --
-          -- In this case, we create a function that lets us more easily define mappings specific
-          -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc, mode)
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-t>.
           map('gd', require('snacks').picker.lsp_definitions, 'Goto Definition')
-
-          -- Find references for the word under your cursor.
           map('gr', require('snacks').picker.lsp_references, 'Goto References')
-
-          -- Jump to the implementation of the word under your cursor.
-          --  Useful when your language has ways of declaring types without an actual implementation.
           map('gI', require('snacks').picker.lsp_implementations, 'Goto Implementation')
-
-          -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
           map('<leader>lrn', vim.lsp.buf.rename, 'Rename')
           map('<F2>', vim.lsp.buf.rename, 'Rename')
-
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
-          -- map('<leader>lca', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
           map('<leader>lca', function()
             vim.lsp.buf.code_action({ context = { diagnostics = {}, only = { 'quickfix', 'refactor', 'source' } }, apply = true })
           end, 'Code Action', { 'n', 'x' })
-
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
-
           map('<leader>lK', vim.lsp.buf.hover, 'Hover Documentation')
           map('<leader>ldh', vim.lsp.buf.hover, 'Hover Documentation')
           map('<leader>lf', function(_)
@@ -183,11 +159,6 @@ return {
           map('<leader>lgr', require('snacks').picker.lsp_references, 'Goto References')
           map('<leader>lk', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
@@ -212,10 +183,6 @@ return {
             })
           end
 
-          -- The following code creates a keymap to toggle inlay hints in your
-          -- code, if the language server you are using supports them
-          --
-          -- This may be unwanted, since they displace some of your code
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
             map('<leader>lth', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
@@ -233,7 +200,7 @@ return {
     end,
   },
   {
-    'j-hui/fidget.nvim', -- Extensible UI for Neovim notifications and LSP progress messages.
+    'j-hui/fidget.nvim',
     version = '*',
     opts = {},
   },
