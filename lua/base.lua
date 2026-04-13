@@ -63,7 +63,7 @@ end
 -- %=: separates left and right sections
 -- %r: readonly flag
 -- %y: file type
-vim.o.statusline = "%{get(b:,'gitsigns_head','')} %{%v:lua.status_filepath()%} %m %=%r %{%v:lua.require('claude').statusline_summary()%} %y"
+vim.o.statusline = "%{get(b:,'gitsigns_head','')} %{%v:lua.status_filepath()%} %m %=%r %y"
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'go' },

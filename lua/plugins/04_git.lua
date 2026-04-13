@@ -1,5 +1,16 @@
 return {
   {
+    'esmuellert/codediff.nvim',
+    cmds = { 'CodeDiff' },
+    keys = {
+      {
+        '<leader>D',
+        '<cmd>CodeDiff main...HEAD<cr>',
+        desc = 'Code Diff',
+      },
+    },
+  },
+  {
     'NeogitOrg/neogit',
     cmd = { 'Neogit' },
     -- version = '*',

@@ -48,6 +48,9 @@ return {
       commands = {
         'TabflowOpenWorktree',
       },
+      right_section = function()
+        return require('claude').statusline_summary() .. os.date(' | %H:%M:%S')
+      end,
     },
     keys = {
       {
