@@ -1,35 +1,5 @@
 local api = vim.api
 
-api.nvim_create_user_command('LiveServer', function(opts)
-  local dir = vim.fn.expand('%:h')
-  if dir == '' then
-    dir = vim.fn.getcwd()
-  end
-  local _cmd = {
-    'python3',
-    '-m',
-    'http.server',
-    '--directory',
-    dir,
-  }
-  vim.list_extend(_cmd, vim.split(opts.args, ' '))
-
-  local cmd = {}
-  for _, v in ipairs(_cmd) do
-    if v ~= '' then
-      table.insert(cmd, v)
-    end
-  end
-  vim.notify(vim.fn.join(cmd, ' '))
-
-  vim.system(cmd, {}, function(obj)
-    if obj.code ~= 0 then
-      vim.notify(obj.stderr, vim.log.levels.WARN)
-      return
-    end
-  end)
-end, { nargs = '*' })
-
 api.nvim_create_user_command('Messages', function()
   local buf = api.nvim_create_buf(false, true)
   local width = math.floor(vim.o.columns * 0.8)
