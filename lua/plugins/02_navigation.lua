@@ -49,7 +49,17 @@ return {
         'TabflowOpenWorktree',
       },
       right_section = function()
-        return require('claude').statusline_summary() .. os.date(' | %H:%M:%S')
+        local line = {}
+        local ok, claude = pcall(require, 'claude')
+        if ok then
+          table.insert(line, 'cl ' .. claude.statusline_summary())
+        end
+        local ok2, codex = pcall(require, 'codex')
+        if ok2 then
+          table.insert(line, 'ch ' .. codex.statusline_summary())
+        end
+        table.insert(line, os.date('%H:%M:%S'))
+        return table.concat(line, ' | ')
       end,
       right_section_refresh_ms = 1000,
     },

@@ -19,6 +19,16 @@ return {
       terminals = 'terminals.nvim',
     },
   },
+  {
+    'goropikari/codex.nvim',
+    build = 'make',
+    dependencies = {
+      'folke/snacks.nvim',
+    },
+    opts = {
+      terminals = 'terminals.nvim',
+    },
+  },
   os.getenv('COMPANY_LLM_PLUGIN_PATH') and {
     dir = os.getenv('COMPANY_LLM_PLUGIN_PATH'),
     opts = {},
