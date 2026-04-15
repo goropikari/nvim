@@ -51,6 +51,7 @@ return {
       right_section = function()
         return require('claude').statusline_summary() .. os.date(' | %H:%M:%S')
       end,
+      right_section_refresh_ms = 1000,
     },
     keys = {
       {
