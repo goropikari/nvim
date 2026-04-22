@@ -11,6 +11,13 @@ return {
     },
   },
   {
+    'goropikari/gitdiff.nvim',
+    dependencies = {
+      'folke/snacks.nvim',
+    },
+    opts = {},
+  },
+  {
     'NeogitOrg/neogit',
     cmd = { 'Neogit' },
     -- version = '*',

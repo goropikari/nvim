@@ -22,7 +22,7 @@ return {
       linters_by_ft = {
         ['*'] = { 'gitleaks' },
         go = {
-          'revive',
+          -- 'revive',
           'errcheck',
         },
         make = { 'checkmake' },

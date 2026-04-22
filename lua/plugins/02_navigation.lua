@@ -1,7 +1,7 @@
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
-    branch = 'v3.x',
+    version = '*',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
@@ -17,10 +17,22 @@ return {
       },
     },
     opts = {
-      sources = { 'filesystem', 'buffers', 'git_status', 'document_symbols' },
-      open_files_do_not_replace_types = { 'terminal', 'Trouble', 'trouble', 'qf', 'Outline' },
+      sources = {
+        'filesystem',
+        'buffers',
+        'git_status',
+        'document_symbols',
+      },
+      open_files_do_not_replace_types = {
+        'terminal',
+        'Trouble',
+        'trouble',
+        'qf',
+        'Outline',
+      },
       filesystem = {
         bind_to_cwd = true,
+        hijack_netrw_behavior = 'open_default',
         follow_current_file = { enabled = true },
         use_libuv_file_watcher = true,
         filtered_items = {
@@ -41,6 +53,19 @@ return {
       },
     },
   },
+  -- {
+  --   'nvim-tree/nvim-tree.lua',
+  --   opts = {},
+  --   keys = {
+  --     {
+  --       '<c-e>',
+  --       function()
+  --         require('nvim-tree.api').tree.toggle()
+  --       end,
+  --       desc = 'Explorer NvimTree',
+  --     },
+  --   },
+  -- },
   {
     'goropikari/tabflow.nvim',
     lazy = false,
