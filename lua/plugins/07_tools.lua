@@ -37,8 +37,24 @@ return {
             require('terminals.terminal').send_visual_selection()
           end)
         end,
-        mode = 'v',
+        mode = 'x',
         desc = 'Send selection to terminal',
+      },
+      {
+        '<leader>SS',
+        function()
+          require('terminals.terminal').send_current_line_as_bracketed_paste()
+        end,
+        mode = 'n',
+        desc = 'Send selection to Claude Code',
+      },
+      {
+        '<leader>SS',
+        function()
+          require('terminals.terminal').send_visual_selection_as_bracketed_paste()
+        end,
+        mode = 'x',
+        desc = 'Send selection to Claude Code',
       },
     },
   },
