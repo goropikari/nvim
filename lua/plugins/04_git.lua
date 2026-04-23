@@ -2,10 +2,11 @@ return {
   {
     'esmuellert/codediff.nvim',
     cmds = { 'CodeDiff' },
+    opts = {},
     keys = {
       {
         '<leader>D',
-        '<cmd>CodeDiff main...HEAD<cr>',
+        '<cmd>CodeDiff main...<cr>',
         desc = 'Code Diff',
       },
     },
