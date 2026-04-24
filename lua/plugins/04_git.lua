@@ -1,6 +1,6 @@
 return {
   {
-    'esmuellert/codediff.nvim',
+    'goropikari/codediff.nvim',
     cmds = { 'CodeDiff' },
     opts = {},
     keys = {
@@ -12,19 +12,12 @@ return {
     },
   },
   {
-    'goropikari/gitdiff.nvim',
-    dependencies = {
-      'folke/snacks.nvim',
-    },
-    opts = {},
-  },
-  {
     'NeogitOrg/neogit',
     cmd = { 'Neogit' },
     -- version = '*',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'esmuellert/codediff.nvim',
+      'goropikari/codediff.nvim',
       'folke/snacks.nvim',
     },
     opts = {
