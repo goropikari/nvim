@@ -104,6 +104,12 @@ return {
           end,
         },
         {
+          'typescript-language-server',
+          condition = function()
+            return vim.fn.executable('npm') == 1
+          end,
+        },
+        {
           'cbfmt',
         },
         {

@@ -49,7 +49,18 @@ return {
       {
         '<leader><space>',
         function()
-          require('snacks').picker.buffers()
+          local current_tab_buffers = {}
+          for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            current_tab_buffers[vim.api.nvim_win_get_buf(win)] = true
+          end
+
+          require('snacks').picker.buffers({
+            filter = {
+              filter = function(item)
+                return current_tab_buffers[item.buf] == true
+              end,
+            },
+          })
         end,
         desc = 'Find existing buffers',
       },
@@ -169,6 +180,29 @@ return {
           expr = true,
           group = 'Yank',
           replace_keycodes = false,
+        },
+        {
+          '<leader>y',
+          function()
+            local path = vim.fn.fnamemodify(vim.fn.expand('%:p'), ':.')
+            local start_line = vim.fn.line("'<")
+            local end_line = vim.fn.line("'>")
+
+            if start_line > end_line then
+              start_line, end_line = end_line, start_line
+            end
+
+            local value
+            if start_line == end_line then
+              value = string.format('%s:L%s', path, start_line)
+            else
+              value = string.format('%s:L%s-L%s', path, start_line, end_line)
+            end
+
+            vim.fn.setreg('+', value)
+          end,
+          mode = 'v',
+          desc = 'clipboard: copy relative path with selected line range',
         },
         {
           '<leader>ya',

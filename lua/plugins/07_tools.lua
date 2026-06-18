@@ -6,6 +6,7 @@ return {
       commands = {
         'TerminalPicker',
         'TerminalSetPosition',
+        'TerminalSplit',
       },
       keymaps = {
         next = { lhs = '<A-n>', modes = { 'n', 't' } },
@@ -46,7 +47,7 @@ return {
           require('terminals.terminal').send_current_line_as_bracketed_paste()
         end,
         mode = 'n',
-        desc = 'Send selection to Claude Code',
+        desc = 'Send selection to AI agent',
       },
       {
         '<leader>SS',
@@ -54,7 +55,7 @@ return {
           require('terminals.terminal').send_visual_selection_as_bracketed_paste()
         end,
         mode = 'x',
-        desc = 'Send selection to Claude Code',
+        desc = 'Send selection to AI agent',
       },
     },
   },

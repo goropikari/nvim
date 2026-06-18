@@ -10,6 +10,7 @@ vim.lsp.enable({
   'lua_ls',
   'pylsp',
   'ruby_lsp',
+  'ts_ls',
   'typos_lsp',
   'yamlls',
 })
