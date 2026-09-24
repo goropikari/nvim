@@ -1,25 +1,25 @@
 return {
-  {
-    'goropikari/codesearch.nvim',
-    dev = true,
-    dependencies = {
-      'folke/snacks.nvim',
-    },
-    cmd = {
-      'CodeSearch',
-      'CodeSearchIndex',
-      'CodeSearchConfig',
-    },
-    opts = {
-      executable = 'codesearch',
-      limit = 10,
-    },
-    keys = {
-      {
-        '<leader>cs',
-        '<cmd>CodeSearch<cr>',
-        desc = 'Code search',
-      },
-    },
-  },
+  -- {
+  --   'goropikari/codesearch.nvim',
+  --   dev = true,
+  --   dependencies = {
+  --     'folke/snacks.nvim',
+  --   },
+  --   cmd = {
+  --     'CodeSearch',
+  --     'CodeSearchIndex',
+  --     'CodeSearchConfig',
+  --   },
+  --   opts = {
+  --     executable = 'codesearch',
+  --     limit = 10,
+  --   },
+  --   keys = {
+  --     {
+  --       '<leader>cs',
+  --       '<cmd>CodeSearch<cr>',
+  --       desc = 'Code search',
+  --     },
+  --   },
+  -- },
 }
