@@ -9,24 +9,24 @@ return {
   --     debounce_ms = 500,
   --   },
   -- },
-  {
-    'goropikari/claude.nvim',
-    dependencies = {
-      'folke/snacks.nvim',
-      'goropikari/terminals.nvim',
-    },
-    opts = {
-      terminals = 'terminals.nvim',
-    },
-  },
-  {
-    'goropikari/codex.nvim',
-    build = 'make',
-    dependencies = {
-      'folke/snacks.nvim',
-    },
-    opts = {
-      terminals = 'terminals.nvim',
-    },
-  },
+  -- {
+  --   'goropikari/claude.nvim',
+  --   dependencies = {
+  --     'folke/snacks.nvim',
+  --     'goropikari/terminals.nvim',
+  --   },
+  --   opts = {
+  --     terminals = 'terminals.nvim',
+  --   },
+  -- },
+  -- {
+  --   'goropikari/codex.nvim',
+  --   build = 'make',
+  --   dependencies = {
+  --     'folke/snacks.nvim',
+  --   },
+  --   opts = {
+  --     terminals = 'terminals.nvim',
+  --   },
+  -- },
 }
